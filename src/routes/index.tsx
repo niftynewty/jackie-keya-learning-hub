@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { CourseCard } from "@/components/site/course-card";
 import { courses } from "@/lib/site-data";
 import { meta } from "@/components/site/page";
-import hero from "@file:///D:/my%20piics/MOK_5542_Original.jpg";
+import hero from "@/assets/jackie-hero.jpg";
 
 // No head() here: the home route inherits title/description/og/twitter from
 // __root.tsx, and ships no og:image so serve-time hosting can inject the
