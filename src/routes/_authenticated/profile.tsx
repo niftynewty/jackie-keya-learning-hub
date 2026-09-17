@@ -49,8 +49,8 @@ function ProfilePage() {
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    void supabase.rpc("touch_profile_activity");
-    void Promise.all([
+    void supabase.rpc("touch_profile_activity").then(() => loadAll());
+    const loadAll = () => Promise.all([
       supabase.from("profiles").select("*").eq("id", user.id).single(),
       supabase.from("enrollments").select("*").order("enrolled_at", { ascending: false }),
       supabase.from("certificates").select("*").order("issued_at", { ascending: false }),
@@ -67,6 +67,7 @@ function ProfilePage() {
       setBadges(((sb.data ?? []) as Array<{ awarded_at: string; badges: Badge | null }>).map((row) => ({ awarded_at: row.awarded_at, badge: row.badges })));
       setCompletedLessons(lp.data ?? []);
     });
+    void loadAll();
   }, [user.id]);
 
   const enrolled = useMemo(
