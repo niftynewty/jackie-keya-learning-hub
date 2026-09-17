@@ -14,3 +14,8 @@
 - [x] Build grouped responsive admin navigation and detailed live overview
 - [x] Expand learning, people, sales, content, bookings, analytics, and settings workflows
 - [x] Validate admin workspace on desktop and mobile
+
+## Detailed student profile
+- [x] Extended profile data model (story, focus areas, preferences, privacy, activity)
+- [x] Private avatar uploads
+- [x] /profile page: identity header, completeness score, learning snapshot, journey, achievements, history, preferences, security & data export
