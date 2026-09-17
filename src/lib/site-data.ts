@@ -12,7 +12,7 @@ export const courses: Course[] = [
 ];
 
 export const navigation = [
-  ["Courses", "/courses"], ["Blended Families", "/blended-families"], ["New Beginnings", "/new-beginnings"], ["About Jackie", "/about"], ["Resources", "/resources"],
+  ["Courses", "/courses"], ["Blended Families", "/blended-families"], ["New Beginnings", "/new-beginnings"], ["About Jackie", "/about"], ["Book a session", "/book-a-session"],
 ] as const;
 
 export const fmt = (value: number) => new Intl.NumberFormat("en-KE", { style: "currency", currency: "KES", maximumFractionDigits: 0 }).format(value).replace("KES", "KSh");
