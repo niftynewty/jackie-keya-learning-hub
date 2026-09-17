@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import type { useAdminData } from "./data";
 import { Stat } from "./orders-panel";
 
-export function StudentsPanel({ admin }: { admin: ReturnType<typeof useAdminData> }) {
+export function StudentsPanel({ admin, search = "" }: { admin: ReturnType<typeof useAdminData>; search?: string }) {
   const { data, names, courseTitles, percent, completedCount, totalLessons, reload } = admin;
 
   async function extend(enrollmentId: string, expiresAt: string) {
@@ -23,7 +23,7 @@ export function StudentsPanel({ admin }: { admin: ReturnType<typeof useAdminData
   const students = data.profiles.map((profile) => ({
     profile,
     enrollments: data.enrollments.filter((e) => e.user_id === profile.id),
-  })).sort((a, b) => b.enrollments.length - a.enrollments.length);
+  })).filter(({ profile }) => `${profile.display_name} ${profile.phone ?? ""}`.toLowerCase().includes(search.toLowerCase())).sort((a, b) => b.enrollments.length - a.enrollments.length);
 
   return (
     <div>
