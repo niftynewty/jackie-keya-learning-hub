@@ -18,12 +18,12 @@ export const Route = createFileRoute("/")({
 // IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   const paths = [
-    [Heart,"Healing & heartbreak","Gentle support for grief, release, and rebuilding.","/new-beginnings"],
-    [HandHeart,"Relationships","Build honest, healthier ways of relating.","/courses"],
-    [Home,"Blended families","Create trust, boundaries, and belonging.","/blended-families"],
-    [UsersRound,"Parenting & co-parenting","Put children and clarity at the centre.","/blended-families"],
-    [Sprout,"Personal growth","Reconnect with who you are becoming.","/courses"],
-    [Compass,"New beginnings","Turn uncertainty into a grounded next step.","/new-beginnings"],
+    ["Healing & heartbreak","Gentle support for grief, release, and rebuilding.","/new-beginnings"],
+    ["Relationships","Build honest, healthier ways of relating.","/courses"],
+    ["Blended families","Create trust, boundaries, and belonging.","/blended-families"],
+    ["Parenting & co-parenting","Put children and clarity at the centre.","/blended-families"],
+    ["Personal growth","Reconnect with who you are becoming.","/courses"],
+    ["New beginnings","Turn uncertainty into a grounded next step.","/new-beginnings"],
   ] as const;
   return (
     <>
