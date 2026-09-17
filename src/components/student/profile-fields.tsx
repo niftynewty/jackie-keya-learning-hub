@@ -16,7 +16,7 @@ export function Field({ label, hint, children }: { label: string; hint?: string 
   );
 }
 
-export function TextField({ label, hint, value, onChange, type = "text", placeholder }: { label: string; hint?: string | undefined; value: string; onChange: (v: string) => void; type?: string; placeholder?: string }) {
+export function TextField({ label, hint, value, onChange, type = "text", placeholder }: { label: string; hint?: string | undefined; value: string; onChange: (v: string) => void; type?: string; placeholder?: string | undefined }) {
   return <Field label={label} hint={hint}><Input type={type} value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} /></Field>;
 }
 
