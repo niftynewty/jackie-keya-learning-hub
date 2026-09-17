@@ -8,3 +8,9 @@
 - [x] Public booking flow with weekday calendar, real availability, visitor or student details
 - [x] Student dashboard: notifications panel, coaching sessions tab, real completion analytics
 - [ ] Deferred: M-Pesa/real payment charging, transactional email, granting admin to additional accounts (manual)
+
+## Detailed admin workspace rebuild
+- [x] Expand secure admin data model for content, discounts, achievements, settings, and audit history
+- [x] Build grouped responsive admin navigation and detailed live overview
+- [x] Expand learning, people, sales, content, bookings, analytics, and settings workflows
+- [x] Validate admin workspace on desktop and mobile
