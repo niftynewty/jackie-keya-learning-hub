@@ -44,8 +44,8 @@ function BookingPage() {
   const selectedType = sessionTypes.find((t) => t.value === type)!;
 
   async function submit() {
-    if (!slot) return toast.error("Choose a day and time first");
-    if (!form.full_name.trim() || !form.email.trim()) return toast.error("Please add your name and email");
+    if (!slot) { toast.error("Choose a day and time first"); return; }
+    if (!form.full_name.trim() || !form.email.trim()) { toast.error("Please add your name and email"); return; }
     setSaving(true);
     const { data: auth } = await supabase.auth.getUser();
     const { error } = await supabase.from("bookings").insert({
