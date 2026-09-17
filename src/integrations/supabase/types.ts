@@ -748,33 +748,117 @@ export type Database = {
       profiles: {
         Row: {
           avatar_url: string | null
+          bio: string | null
+          city: string | null
+          country: string | null
           created_at: string
+          date_of_birth: string | null
           display_name: string
           email_notifications: boolean
+          family_situation: string | null
+          focus_areas: string[]
+          gender: string | null
+          goals: string | null
+          headline: string | null
           id: string
+          last_active_at: string | null
           learning_reminders: boolean
+          life_stage: string | null
+          login_count: number
+          marketing_opt_in: boolean
+          occupation: string | null
+          onboarding_completed: boolean
           phone: string | null
+          preferred_contact: string
+          preferred_language: string
+          profile_visibility: string
+          pronouns: string | null
+          referral_source: string | null
+          relationship_status: string | null
+          reminder_time: string
+          sms_notifications: boolean
+          support_person_name: string | null
+          support_person_phone: string | null
+          timezone: string
           updated_at: string
+          weekly_digest: boolean
+          whatsapp: string | null
         }
         Insert: {
           avatar_url?: string | null
+          bio?: string | null
+          city?: string | null
+          country?: string | null
           created_at?: string
+          date_of_birth?: string | null
           display_name?: string
           email_notifications?: boolean
+          family_situation?: string | null
+          focus_areas?: string[]
+          gender?: string | null
+          goals?: string | null
+          headline?: string | null
           id: string
+          last_active_at?: string | null
           learning_reminders?: boolean
+          life_stage?: string | null
+          login_count?: number
+          marketing_opt_in?: boolean
+          occupation?: string | null
+          onboarding_completed?: boolean
           phone?: string | null
+          preferred_contact?: string
+          preferred_language?: string
+          profile_visibility?: string
+          pronouns?: string | null
+          referral_source?: string | null
+          relationship_status?: string | null
+          reminder_time?: string
+          sms_notifications?: boolean
+          support_person_name?: string | null
+          support_person_phone?: string | null
+          timezone?: string
           updated_at?: string
+          weekly_digest?: boolean
+          whatsapp?: string | null
         }
         Update: {
           avatar_url?: string | null
+          bio?: string | null
+          city?: string | null
+          country?: string | null
           created_at?: string
+          date_of_birth?: string | null
           display_name?: string
           email_notifications?: boolean
+          family_situation?: string | null
+          focus_areas?: string[]
+          gender?: string | null
+          goals?: string | null
+          headline?: string | null
           id?: string
+          last_active_at?: string | null
           learning_reminders?: boolean
+          life_stage?: string | null
+          login_count?: number
+          marketing_opt_in?: boolean
+          occupation?: string | null
+          onboarding_completed?: boolean
           phone?: string | null
+          preferred_contact?: string
+          preferred_language?: string
+          profile_visibility?: string
+          pronouns?: string | null
+          referral_source?: string | null
+          relationship_status?: string | null
+          reminder_time?: string
+          sms_notifications?: boolean
+          support_person_name?: string | null
+          support_person_phone?: string | null
+          timezone?: string
           updated_at?: string
+          weekly_digest?: boolean
+          whatsapp?: string | null
         }
         Relationships: []
       }
@@ -889,6 +973,7 @@ export type Database = {
         Returns: boolean
       }
       taken_slots: { Args: { _from: string; _to: string }; Returns: string[] }
+      touch_profile_activity: { Args: never; Returns: undefined }
     }
     Enums: {
       app_role: "admin" | "student" | "content_manager" | "support" | "finance"
