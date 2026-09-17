@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 
-export function Field({ label, hint, children }: { label: string; hint?: string; children: ReactNode }) {
+export function Field({ label, hint, children }: { label: string; hint?: string | undefined; children: ReactNode }) {
   return (
     <div>
       <Label className="text-xs font-semibold uppercase tracking-[.14em] text-muted-foreground">{label}</Label>
@@ -16,15 +16,15 @@ export function Field({ label, hint, children }: { label: string; hint?: string;
   );
 }
 
-export function TextField({ label, hint, value, onChange, type = "text", placeholder }: { label: string; hint?: string; value: string; onChange: (v: string) => void; type?: string; placeholder?: string }) {
+export function TextField({ label, hint, value, onChange, type = "text", placeholder }: { label: string; hint?: string | undefined; value: string; onChange: (v: string) => void; type?: string; placeholder?: string }) {
   return <Field label={label} hint={hint}><Input type={type} value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} /></Field>;
 }
 
-export function AreaField({ label, hint, value, onChange, placeholder, rows = 4 }: { label: string; hint?: string; value: string; onChange: (v: string) => void; placeholder?: string; rows?: number }) {
+export function AreaField({ label, hint, value, onChange, placeholder, rows = 4 }: { label: string; hint?: string | undefined; value: string; onChange: (v: string) => void; placeholder?: string | undefined; rows?: number }) {
   return <Field label={label} hint={hint}><Textarea rows={rows} value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} /></Field>;
 }
 
-export function ChoiceField({ label, hint, value, options, onChange, allowEmpty = true }: { label: string; hint?: string; value: string; options: ReadonlyArray<string | readonly [string, string]>; onChange: (v: string) => void; allowEmpty?: boolean }) {
+export function ChoiceField({ label, hint, value, options, onChange, allowEmpty = true }: { label: string; hint?: string | undefined; value: string; options: ReadonlyArray<string | readonly [string, string]>; onChange: (v: string) => void; allowEmpty?: boolean }) {
   const pairs = options.map((option) => (typeof option === "string" ? [option, option] as const : option));
   return (
     <Field label={label} hint={hint}>
@@ -36,7 +36,7 @@ export function ChoiceField({ label, hint, value, options, onChange, allowEmpty 
   );
 }
 
-export function ChipField({ label, hint, values, options, onChange }: { label: string; hint?: string; values: string[]; options: readonly string[]; onChange: (v: string[]) => void }) {
+export function ChipField({ label, hint, values, options, onChange }: { label: string; hint?: string | undefined; values: string[]; options: readonly string[]; onChange: (v: string[]) => void }) {
   return (
     <Field label={label} hint={hint}>
       <div className="flex flex-wrap gap-2">
@@ -66,7 +66,7 @@ export function ToggleRow({ label, copy, checked, onChange }: { label: string; c
   );
 }
 
-export function SectionCard({ title, copy, children, actions }: { title: string; copy?: string; children: ReactNode; actions?: ReactNode }) {
+export function SectionCard({ title, copy, children, actions }: { title: string; copy?: string | undefined; children: ReactNode; actions?: ReactNode }) {
   return (
     <section className="border border-border bg-card p-6 md:p-8">
       <div className="flex flex-wrap items-end justify-between gap-4">
