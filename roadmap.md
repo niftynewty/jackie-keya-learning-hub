@@ -1,4 +1,4 @@
-- [ ] Build all approved Jackie Keya Learning Hub public pages
-- [ ] Add accounts and protected student learning area
-- [ ] Add simulated checkout and enrollment flow
+- [x] Build all approved Jackie Keya Learning Hub public pages
+- [x] Add accounts and protected student learning area
+- [x] Add simulated checkout and enrollment flow
 - [ ] Validate mobile and desktop experience
