@@ -1,10 +1,11 @@
 import { toast } from "sonner";
-import { Clock3, RotateCcw } from "lucide-react";
+import { Clock3, RotateCcw, UserSearch } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { supabase } from "@/integrations/supabase/client";
 import type { useAdminData } from "./data";
 import { Stat } from "./orders-panel";
+import { StudentProfileSheet } from "./student-profile";
 
 export function StudentsPanel({ admin, search = "" }: { admin: ReturnType<typeof useAdminData>; search?: string }) {
   const { data, names, courseTitles, percent, completedCount, totalLessons, reload } = admin;
