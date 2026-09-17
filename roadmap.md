@@ -13,4 +13,4 @@
 - [x] Expand secure admin data model for content, discounts, achievements, settings, and audit history
 - [x] Build grouped responsive admin navigation and detailed live overview
 - [x] Expand learning, people, sales, content, bookings, analytics, and settings workflows
-- [ ] Validate admin workspace on desktop and mobile
+- [x] Validate admin workspace on desktop and mobile
