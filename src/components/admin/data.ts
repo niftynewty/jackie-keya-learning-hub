@@ -11,16 +11,19 @@ export type AdminData = {
   progress: Tables<"lesson_progress">[];
   certificates: Tables<"certificates">[];
   payments: Tables<"payments">[];
+  bookings: Tables<"bookings">[];
+  badges: Tables<"badges">[];
+  studentBadges: Tables<"student_badges">[];
 };
 
-const empty: AdminData = { courses: [], modules: [], lessons: [], profiles: [], enrollments: [], progress: [], certificates: [], payments: [] };
+const empty: AdminData = { courses: [], modules: [], lessons: [], profiles: [], enrollments: [], progress: [], certificates: [], payments: [], bookings: [], badges: [], studentBadges: [] };
 
 export function useAdminData() {
   const [data, setData] = useState<AdminData>(empty);
   const [loading, setLoading] = useState(true);
 
   const reload = useCallback(async () => {
-    const [courses, modules, lessons, profiles, enrollments, progress, certificates, payments] = await Promise.all([
+    const [courses, modules, lessons, profiles, enrollments, progress, certificates, payments, bookings, badges, studentBadges] = await Promise.all([
       supabase.from("courses").select("*").order("created_at"),
       supabase.from("modules").select("*").order("sort_order"),
       supabase.from("lessons").select("*").order("sort_order"),
@@ -29,10 +32,14 @@ export function useAdminData() {
       supabase.from("lesson_progress").select("*"),
       supabase.from("certificates").select("*").order("issued_at", { ascending: false }),
       supabase.from("payments").select("*").order("created_at", { ascending: false }),
+      supabase.from("bookings").select("*").order("scheduled_for", { ascending: false }),
+      supabase.from("badges").select("*").order("created_at"),
+      supabase.from("student_badges").select("*").order("awarded_at", { ascending: false }),
     ]);
     setData({
       courses: courses.data ?? [], modules: modules.data ?? [], lessons: lessons.data ?? [], profiles: profiles.data ?? [],
       enrollments: enrollments.data ?? [], progress: progress.data ?? [], certificates: certificates.data ?? [], payments: payments.data ?? [],
+      bookings: bookings.data ?? [], badges: badges.data ?? [], studentBadges: studentBadges.data ?? [],
     });
     setLoading(false);
   }, []);

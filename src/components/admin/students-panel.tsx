@@ -1,10 +1,11 @@
 import { toast } from "sonner";
-import { Clock3, RotateCcw } from "lucide-react";
+import { Clock3, RotateCcw, UserSearch } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { supabase } from "@/integrations/supabase/client";
 import type { useAdminData } from "./data";
 import { Stat } from "./orders-panel";
+import { StudentProfileSheet } from "./student-profile";
 
 export function StudentsPanel({ admin, search = "" }: { admin: ReturnType<typeof useAdminData>; search?: string }) {
   const { data, names, courseTitles, percent, completedCount, totalLessons, reload } = admin;
@@ -37,7 +38,11 @@ export function StudentsPanel({ admin, search = "" }: { admin: ReturnType<typeof
           <article key={profile.id} className="border border-border bg-card p-6">
             <div className="flex flex-wrap items-baseline justify-between gap-3">
               <h3 className="font-display text-2xl">{names[profile.id]}</h3>
-              <p className="text-xs text-muted-foreground">Joined {new Date(profile.created_at).toLocaleDateString()}{profile.phone ? ` · ${profile.phone}` : ""}</p>
+              <div className="flex items-center gap-3">
+                <p className="text-xs text-muted-foreground">Joined {new Date(profile.created_at).toLocaleDateString()}{profile.phone ? ` · ${profile.phone}` : ""}</p>
+                <StudentProfileSheet admin={admin} studentId={profile.id}
+                  trigger={<Button size="sm" variant="outline"><UserSearch />View full profile</Button>} />
+              </div>
             </div>
             {enrollments.length ? (
               <div className="mt-6 space-y-5">
