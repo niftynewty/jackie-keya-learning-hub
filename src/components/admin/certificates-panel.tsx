@@ -1,11 +1,17 @@
-import { useState } from "react";
-import { Award, BadgeCheck } from "lucide-react";
+import { useMemo, useState } from "react";
+import { Award, BadgeCheck, Plus, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import type { useAdminData } from "./data";
 import { Stat } from "./orders-panel";
+
+function newCode() {
+  return `JKLH-${new Date().getFullYear()}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
+}
 
 export function CertificatesPanel({ admin }: { admin: ReturnType<typeof useAdminData> }) {
   const { data, names, courseTitles, percent, reload } = admin;
@@ -16,9 +22,8 @@ export function CertificatesPanel({ admin }: { admin: ReturnType<typeof useAdmin
 
   async function issue(userId: string, courseId: string) {
     setBusy(`${userId}-${courseId}`);
-    const number = `JKLH-${new Date().getFullYear()}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
     const { error } = await supabase.from("certificates").insert({
-      user_id: userId, course_id: courseId, certificate_number: number,
+      user_id: userId, course_id: courseId, certificate_number: newCode(),
       recipient_name_formatted: names[userId] ?? "Student",
     });
     setBusy(null);
@@ -32,7 +37,11 @@ export function CertificatesPanel({ admin }: { admin: ReturnType<typeof useAdmin
 
   return (
     <div>
-      <div className="grid gap-5 sm:grid-cols-3">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <h2 className="font-display text-3xl">Certificates</h2>
+        <IssueCertificateDialog admin={admin} />
+      </div>
+      <div className="mt-6 grid gap-5 sm:grid-cols-3">
         <Stat label="Certificates issued" value={String(data.certificates.length)} />
         <Stat label="Ready to issue" value={String(eligible.length)} />
         <Stat label="With a download file" value={String(data.certificates.filter((c) => c.pdf_url).length)} />
