@@ -1,0 +1,1 @@
+REVOKE ALL ON FUNCTION public.create_profile_for_new_user() FROM PUBLIC, anon, authenticated; GRANT EXECUTE ON FUNCTION public.create_profile_for_new_user() TO service_role;
