@@ -25,7 +25,7 @@ export function EnrollmentsPanel({ admin }: { admin: ReturnType<typeof useAdminD
 
   async function update(id: string, values: { status?: "active" | "expired" | "revoked"; expires_at?: string }) {
     const { error } = await supabase.from("enrollments").update(values).eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Enrollment updated"); reload();
   }
 

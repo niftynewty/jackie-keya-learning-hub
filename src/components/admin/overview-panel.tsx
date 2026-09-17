@@ -56,7 +56,7 @@ export function OverviewPanel({ admin, onNavigate }: { admin: ReturnType<typeof 
     const rows = data.profiles.map((profile) => ({ user_id: profile.id, kind: "message", title: broadcast.title.trim(), body: broadcast.body.trim() || null, link: "/dashboard" }));
     const { error } = await supabase.from("notifications").insert(rows);
     setSending(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setBroadcast({ title: "", body: "" });
     toast.success(`Notification sent to ${rows.length} students`);
   }
