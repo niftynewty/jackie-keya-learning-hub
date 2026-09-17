@@ -61,6 +61,17 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-admin-canvas: var(--admin-canvas);
+  --color-admin-sidebar: var(--admin-sidebar);
+  --color-admin-sidebar-foreground: var(--admin-sidebar-foreground);
+  --color-admin-sidebar-muted: var(--admin-sidebar-muted);
+  --color-admin-sidebar-border: var(--admin-sidebar-border);
+  --color-admin-sidebar-hover: var(--admin-sidebar-hover);
+  --color-admin-sidebar-active: var(--admin-sidebar-active);
+  --color-admin-sidebar-active-foreground: var(--admin-sidebar-active-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
 }
 
 :root {
@@ -97,6 +108,17 @@
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
+  --admin-canvas: oklch(0.955 0.012 74);
+  --admin-sidebar: oklch(0.255 0.035 38);
+  --admin-sidebar-foreground: oklch(0.97 0.011 83);
+  --admin-sidebar-muted: oklch(0.78 0.026 60);
+  --admin-sidebar-border: oklch(0.37 0.036 38);
+  --admin-sidebar-hover: oklch(0.32 0.04 39);
+  --admin-sidebar-active: oklch(0.72 0.067 41);
+  --admin-sidebar-active-foreground: oklch(0.25 0.025 35);
+  --success: oklch(0.48 0.11 151);
+  --warning: oklch(0.83 0.09 82);
+  --warning-foreground: oklch(0.38 0.07 62);
 }
 
 .dark {

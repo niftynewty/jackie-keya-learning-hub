@@ -51,7 +51,7 @@ export function OverviewPanel({ admin, onNavigate }: { admin: ReturnType<typeof 
   }).sort((a, b) => b.enrollmentCount - a.enrollmentCount).slice(0, 4);
 
   async function sendBroadcast() {
-    if (!broadcast.title.trim()) return toast.error("Add a notification title");
+    if (!broadcast.title.trim()) { toast.error("Add a notification title"); return; }
     setSending(true);
     const rows = data.profiles.map((profile) => ({ user_id: profile.id, kind: "message", title: broadcast.title.trim(), body: broadcast.body.trim() || null, link: "/dashboard" }));
     const { error } = await supabase.from("notifications").insert(rows);
