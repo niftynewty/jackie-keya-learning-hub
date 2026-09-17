@@ -11,7 +11,7 @@ export function ProfileAvatar({ userId, path, name, onChange }: { userId: string
   const input = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (!path) return setUrl(null);
+    if (!path) { setUrl(null); return; }
     supabase.storage.from("avatars").createSignedUrl(path, 3600).then(({ data }) => setUrl(data?.signedUrl ?? null));
   }, [path]);
 
@@ -19,10 +19,10 @@ export function ProfileAvatar({ userId, path, name, onChange }: { userId: string
     setBusy(true);
     const key = `${userId}/avatar-${Date.now()}.${file.name.split(".").pop() ?? "jpg"}`;
     const { error } = await supabase.storage.from("avatars").upload(key, file, { upsert: true });
-    if (error) { setBusy(false); return toast.error(error.message); }
+    if (error) { setBusy(false); toast.error(error.message); return; }
     const saved = await supabase.from("profiles").update({ avatar_url: key }).eq("id", userId);
     setBusy(false);
-    if (saved.error) return toast.error(saved.error.message);
+    if (saved.error) { toast.error(saved.error.message); return; }
     if (path) await supabase.storage.from("avatars").remove([path]);
     onChange(key);
     toast.success("Profile photo updated");
@@ -34,7 +34,7 @@ export function ProfileAvatar({ userId, path, name, onChange }: { userId: string
     await supabase.storage.from("avatars").remove([path]);
     const { error } = await supabase.from("profiles").update({ avatar_url: null }).eq("id", userId);
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     onChange(null);
     toast.success("Photo removed");
   }
