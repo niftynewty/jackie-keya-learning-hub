@@ -86,7 +86,7 @@ export function CoursesPanel({ search = "" }: { search?: string }) {
     error ? toast.error(error.message) : loadCurriculum(draft.id);
   }
   async function saveModule(module: Module) {
-    const { error } = await supabase.from("modules").update({ title: module.title, description: module.description, sort_order: module.sort_order }).eq("id", module.id);
+    const { error } = await supabase.from("modules").update({ title: module.title, description: module.description, sort_order: module.sort_order, is_published: module.is_published }).eq("id", module.id);
     error ? toast.error(error.message) : toast.success("Module saved");
   }
   async function removeModule(id: string) {
@@ -185,6 +185,7 @@ export function CoursesPanel({ search = "" }: { search?: string }) {
                       <Input className="mt-2" value={module.title} onChange={(e) => setModules(modules.map((m) => m.id === module.id ? { ...m, title: e.target.value } : m))} /></div>
                     <div className="w-24"><Label className="text-xs">Order</Label>
                       <Input className="mt-2" type="number" value={module.sort_order} onChange={(e) => setModules(modules.map((m) => m.id === module.id ? { ...m, sort_order: Number(e.target.value) } : m))} /></div>
+                    <label className="flex items-center gap-2 pb-2 text-xs"><Switch checked={module.is_published} onCheckedChange={(v) => setModules(modules.map((m) => m.id === module.id ? { ...m, is_published: v } : m))} />Published</label>
                     <Button variant="outline" onClick={() => saveModule(module)}><Save />Save</Button>
                     <Button variant="ghost" size="icon" aria-label="Delete module" onClick={() => removeModule(module.id)}><Trash2 /></Button>
                   </div>
@@ -198,8 +199,17 @@ export function CoursesPanel({ search = "" }: { search?: string }) {
                         <div className="w-40"><Label className="text-xs">Video ID</Label>
                           <Input className="mt-2" value={lesson.bunny_video_id ?? ""} onChange={(e) => setLessons(lessons.map((l) => l.id === lesson.id ? { ...l, bunny_video_id: e.target.value } : l))} /></div>
                         <label className="flex items-center gap-2 pb-2 text-xs"><Switch checked={lesson.is_preview} onCheckedChange={(v) => setLessons(lessons.map((l) => l.id === lesson.id ? { ...l, is_preview: v } : l))} />Free preview</label>
+                        <label className="flex items-center gap-2 pb-2 text-xs"><Switch checked={lesson.is_required} onCheckedChange={(v) => setLessons(lessons.map((l) => l.id === lesson.id ? { ...l, is_required: v } : l))} />Required</label>
+                        <div className="w-32"><Label className="text-xs">Access</Label><select className="mt-2 h-9 w-full border border-input bg-background px-2 text-xs" value={lesson.access_level} onChange={(e) => setLessons(lessons.map((l) => l.id === lesson.id ? { ...l, access_level: e.target.value } : l))}><option value="free">Free</option><option value="paid">Paid only</option><option value="locked">Locked</option></select></div>
+                        <div className="w-40"><Label className="text-xs">Completion</Label><select className="mt-2 h-9 w-full border border-input bg-background px-2 text-xs" value={lesson.completion_rule} onChange={(e) => setLessons(lessons.map((l) => l.id === lesson.id ? { ...l, completion_rule: e.target.value } : l))}><option value="manual">Mark manually</option><option value="video_complete">Finish video</option><option value="quiz_pass">Pass quiz</option></select></div>
                         <Button variant="outline" onClick={() => saveLesson(lesson)}><Save />Save</Button>
                         <Button variant="ghost" size="icon" aria-label="Delete lesson" onClick={() => removeLesson(lesson.id)}><Trash2 /></Button>
+                        <div className="grid w-full gap-3 border-t border-border pt-4 md:grid-cols-2">
+                          <Field label="Lesson description"><Textarea rows={2} value={lesson.description ?? ""} onChange={(e) => setLessons(lessons.map((l) => l.id === lesson.id ? { ...l, description: e.target.value } : l))} /></Field>
+                          <Field label="Written content"><Textarea rows={2} value={lesson.written_content ?? ""} onChange={(e) => setLessons(lessons.map((l) => l.id === lesson.id ? { ...l, written_content: e.target.value } : l))} /></Field>
+                          <Field label="Resource name"><Input value={lesson.resource_label ?? ""} onChange={(e) => setLessons(lessons.map((l) => l.id === lesson.id ? { ...l, resource_label: e.target.value } : l))} /></Field>
+                          <Field label="Resource link"><Input value={lesson.resource_url ?? ""} onChange={(e) => setLessons(lessons.map((l) => l.id === lesson.id ? { ...l, resource_url: e.target.value } : l))} /></Field>
+                        </div>
                       </div>
                     ))}
                     <Button variant="ghost" size="sm" onClick={() => addLesson(module.id)}><Plus />Add lesson</Button>
