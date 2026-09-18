@@ -9,6 +9,8 @@ import { Switch } from "@/components/ui/switch";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 import { fmt } from "@/lib/site-data";
+import { CertificateArtwork } from "@/components/certificate/certificate-artwork";
+import { certificateTemplates } from "@/lib/certificate-templates";
 
 type Course = Tables<"courses">;
 type Module = Tables<"modules">;
@@ -66,6 +68,7 @@ export function CoursesPanel({ search = "" }: { search?: string }) {
       instructor: draft.instructor, difficulty: draft.difficulty, trailer_url: draft.trailer_url, thumbnail_url: draft.thumbnail_url,
       sale_price_kes: draft.sale_price_kes, sale_starts_at: draft.sale_starts_at, sale_ends_at: draft.sale_ends_at,
       seo_title: draft.seo_title, seo_description: draft.seo_description,
+      certificate_template: draft.certificate_template,
     }).eq("id", draft.id);
     if (error) { toast.error(error.message); return; }
     await loadCourses();
@@ -169,6 +172,24 @@ export function CoursesPanel({ search = "" }: { search?: string }) {
               <Field label="Who it is for" wide><Textarea rows={2} value={draft.audience} onChange={(e) => setDraft({ ...draft, audience: e.target.value })} /></Field>
               <Field label="SEO title" wide><Input value={draft.seo_title ?? ""} onChange={(e) => setDraft({ ...draft, seo_title: e.target.value || null })} /></Field>
               <Field label="SEO description" wide><Textarea rows={2} value={draft.seo_description ?? ""} onChange={(e) => setDraft({ ...draft, seo_description: e.target.value || null })} /></Field>
+            </div>
+          </section>
+
+          <section className="border border-border bg-card p-6">
+            <div className="max-w-2xl">
+              <p className="text-xs font-semibold uppercase tracking-[.16em] text-primary">Certificate design</p>
+              <h3 className="mt-2 font-display text-2xl">Choose this course’s award</h3>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">New certificates inherit this design. Certificates already issued keep their original design.</p>
+            </div>
+            <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              {certificateTemplates.map((template) => (
+                <button key={template.id} type="button" onClick={() => setDraft({ ...draft, certificate_template: template.id })}
+                  className={`p-3 text-left transition ${draft.certificate_template === template.id ? "bg-primary/10 ring-2 ring-primary" : "border border-border hover:border-primary/60"}`}>
+                  <CertificateArtwork compact recipient="Student Name" course={draft.title || "Course title"} issuedAt={new Date().toISOString()} code="JKLH-PREVIEW" templateId={template.id} />
+                  <p className="mt-3 font-medium">{template.name}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{template.description}</p>
+                </button>
+              ))}
             </div>
           </section>
 

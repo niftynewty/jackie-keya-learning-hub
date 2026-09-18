@@ -1,4 +1,4 @@
-import { getCertificateTemplate } from "@/lib/certificate-templates";
+import { getCertificateTemplate, type CertificateTemplate } from "@/lib/certificate-templates";
 import { cn } from "@/lib/utils";
 
 export type CertificateArtworkProps = {
@@ -14,7 +14,7 @@ export type CertificateArtworkProps = {
 
 const formatDate = (value: string) => new Date(value).toLocaleDateString(undefined, { day: "numeric", month: "long", year: "numeric" });
 
-function Motif({ motif }: { motif: ReturnType<typeof getCertificateTemplate>["motif"] }) {
+function Motif({ motif }: { motif: CertificateTemplate["motif"] }) {
   if (motif === "curves") return <><span className="cert-sweep cert-sweep-top"/><span className="cert-sweep cert-sweep-bottom"/><span className="cert-slash"/></>;
   if (motif === "arch") return <><span className="cert-arch cert-arch-one"/><span className="cert-arch cert-arch-two"/></>;
   if (motif === "horizon") return <><span className="cert-sun"/><span className="cert-horizon cert-horizon-one"/><span className="cert-horizon cert-horizon-two"/></>;

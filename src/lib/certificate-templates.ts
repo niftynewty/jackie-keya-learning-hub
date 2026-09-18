@@ -33,6 +33,6 @@ export function isCertificateTemplateId(value: string | null | undefined): value
   return CERTIFICATE_TEMPLATE_IDS.includes(value as CertificateTemplateId);
 }
 
-export function getCertificateTemplate(value: string | null | undefined) {
-  return certificateTemplates.find((template) => template.id === value) ?? certificateTemplates[0];
+export function getCertificateTemplate(value: string | null | undefined): CertificateTemplate {
+  return certificateTemplates.find((template) => template.id === value) ?? certificateTemplates[0]!;
 }
