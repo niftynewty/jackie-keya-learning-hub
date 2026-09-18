@@ -15,6 +15,8 @@ import { courses, fmt } from "@/lib/site-data";
 import { dateTimeLabel, sessionTypeLabel } from "@/lib/booking";
 import { useProgress } from "@/lib/use-progress";
 import { ProfileAvatar } from "@/components/student/profile-avatar";
+import { CertificateArtwork } from "@/components/certificate/certificate-artwork";
+import { downloadCertificatePdf } from "@/lib/certificate-pdf";
 import { AreaField, ChipField, ChoiceField, SectionCard, TextField, ToggleRow } from "@/components/student/profile-fields";
 import {
   CONTACT_METHODS, FAMILY_SITUATIONS, FOCUS_AREAS, GENDERS, LANGUAGES, LIFE_STAGES, REFERRAL_SOURCES,
@@ -216,15 +218,16 @@ function ProfilePage() {
                   )) : <p className="text-sm text-muted-foreground">No badges yet — they arrive as you complete milestones.</p>}
                 </div>
               </div>
-              <div>
+              <div className="md:col-span-2">
                 <h3 className="text-xs font-semibold uppercase tracking-[.14em] text-muted-foreground">Certificates</h3>
-                <div className="mt-4 space-y-3">
+                <div className="mt-4 grid gap-5 lg:grid-cols-2">
                   {certificates.length ? certificates.map((c) => (
-                    <div key={c.id} className="border border-border p-4">
-                      <p className="font-display text-xl italic">{c.recipient_name_formatted}</p>
-                      <p className="text-sm text-muted-foreground">{courses.find((course) => course.id === c.course_id)?.title}</p>
-                      <p className="mt-2 font-mono text-xs text-muted-foreground">{c.certificate_number}</p>
-                      <p className="text-xs text-muted-foreground">Issued {dateLabel(c.issued_at)} · {c.status}</p>
+                    <div key={c.id} className="border border-border p-3">
+                      <CertificateArtwork compact recipient={c.recipient_name_formatted} course={courses.find((course) => course.id === c.course_id)?.title ?? "Course"} issuedAt={c.issued_at} code={c.certificate_number} templateId={c.template_id} status={c.status} />
+                      <div className="flex flex-wrap items-center justify-between gap-3 px-2 pt-3">
+                        <div><p className="font-display text-xl italic">{c.recipient_name_formatted}</p><p className="text-xs capitalize text-muted-foreground">Issued {dateLabel(c.issued_at)} · {c.status}</p></div>
+                        <Button size="sm" variant="outline" disabled={c.status === "revoked"} onClick={() => downloadCertificatePdf({ recipient: c.recipient_name_formatted, course: courses.find((course) => course.id === c.course_id)?.title ?? "Course", issuedAt: c.issued_at, code: c.certificate_number, templateId: c.template_id })}><Download />Download PDF</Button>
+                      </div>
                     </div>
                   )) : <p className="text-sm text-muted-foreground">Complete a full course to earn your named certificate.</p>}
                 </div>
