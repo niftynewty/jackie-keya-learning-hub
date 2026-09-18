@@ -21,7 +21,7 @@
 - [x] /profile page: identity header, completeness score, learning snapshot, journey, achievements, history, preferences, security & data export
 
 ## Certificate studio
-- [ ] Add ten reusable certificate designs and course-level selection
-- [ ] Upgrade admin issuing, preview, revocation, and reissue controls
-- [ ] Add student certificate preview and PDF download
-- [ ] Validate all templates and certificate flows on desktop and mobile
+- [x] Add ten reusable certificate designs and course-level selection
+- [x] Upgrade admin issuing, live preview, download, revocation, and restore controls
+- [x] Add student certificate previews and generated landscape PDF downloads
+- [x] Validate template integration, responsive scaling, access states, and TypeScript compilation
