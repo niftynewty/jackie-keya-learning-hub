@@ -1,12 +1,14 @@
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
-import { Award, CalendarDays, CreditCard, GraduationCap, Mail, Phone, Sparkles, User } from "lucide-react";
+import { Award, CalendarDays, CreditCard, Download, GraduationCap, Mail, Phone, RotateCcw, ShieldX, Sparkles, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { supabase } from "@/integrations/supabase/client";
 import type { useAdminData } from "./data";
+import { CertificateArtwork } from "@/components/certificate/certificate-artwork";
+import { downloadCertificatePdf } from "@/lib/certificate-pdf";
 
 const money = (kes: number) => `KES ${kes.toLocaleString()}`;
 const date = (value: string) => new Date(value).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" });
@@ -59,6 +61,11 @@ export function StudentProfileSheet({ admin, studentId, trigger }: { admin: Retu
   async function setStatus(id: string, status: "active" | "revoked") {
     const { error } = await supabase.from("enrollments").update({ status }).eq("id", id);
     error ? toast.error(error.message) : (toast.success(status === "active" ? "Access restored" : "Access revoked"), reload());
+  }
+
+  async function setCertificateStatus(id: string, revoked: boolean) {
+    const { error } = await supabase.from("certificates").update({ status: revoked ? "revoked" : "valid", revoked_at: revoked ? new Date().toISOString() : null }).eq("id", id);
+    error ? toast.error(error.message) : (toast.success(revoked ? "Certificate revoked" : "Certificate restored"), reload());
   }
 
   return (
@@ -129,9 +136,12 @@ export function StudentProfileSheet({ admin, studentId, trigger }: { admin: Retu
 
           <Section icon={<Award className="size-4" />} title="Certificates and badges">
             {detail.certificates.map((c) => (
-              <div key={c.id} className="flex flex-wrap items-center justify-between gap-2 border border-border bg-card p-4 text-sm">
-                <span className="font-display text-lg italic">{c.recipient_name_formatted}</span>
-                <span className="text-xs text-muted-foreground">{courseTitles[c.course_id] ?? "Course"} · {c.certificate_number} · {date(c.issued_at)}</span>
+              <div key={c.id} className="border border-border bg-card p-3 text-sm">
+                <CertificateArtwork compact recipient={c.recipient_name_formatted} course={courseTitles[c.course_id] ?? "Course"} issuedAt={c.issued_at} code={c.certificate_number} templateId={c.template_id} status={c.status} />
+                <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+                  <div><span className="block font-display text-lg italic">{c.recipient_name_formatted}</span><span className="text-xs capitalize text-muted-foreground">{c.certificate_number} · {date(c.issued_at)} · {c.status}</span></div>
+                  <div className="flex gap-2"><Button size="sm" variant="outline" disabled={c.status === "revoked"} onClick={() => downloadCertificatePdf({ recipient: c.recipient_name_formatted, course: courseTitles[c.course_id] ?? "Course", issuedAt: c.issued_at, code: c.certificate_number, templateId: c.template_id })}><Download />PDF</Button><Button size="sm" variant="outline" onClick={() => setCertificateStatus(c.id, c.status !== "revoked")}>{c.status === "revoked" ? <RotateCcw /> : <ShieldX />}</Button></div>
+                </div>
               </div>
             ))}
             {detail.badges.map((b) => (
