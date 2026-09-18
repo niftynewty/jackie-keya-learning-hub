@@ -181,7 +181,7 @@ export function CoursesPanel({ search = "" }: { search?: string }) {
               <h3 className="mt-2 font-display text-2xl">Choose this course’s award</h3>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">New certificates inherit this design. Certificates already issued keep their original design.</p>
             </div>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
               {certificateTemplates.map((template) => (
                 <button key={template.id} type="button" onClick={() => setDraft({ ...draft, certificate_template: template.id })}
                   className={`p-3 text-left transition ${draft.certificate_template === template.id ? "bg-primary/10 ring-2 ring-primary" : "border border-border hover:border-primary/60"}`}>

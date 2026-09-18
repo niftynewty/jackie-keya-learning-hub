@@ -89,7 +89,7 @@ export function StudentProfileSheet({ admin, studentId, trigger }: { admin: Retu
             </dl>
           </Section>
 
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <Metric label="Courses" value={String(detail.enrollments.length)} />
             <Metric label="Lessons completed" value={String(detail.lessonsDone)} />
             <Metric label="Total paid" value={money(detail.spent)} />

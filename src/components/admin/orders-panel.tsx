@@ -22,7 +22,7 @@ export function OrdersPanel({ names, courseTitles }: { names: Record<string, str
 
   return (
     <div>
-      <div className="grid gap-5 sm:grid-cols-3">
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <Stat label="Orders" value={String(payments.length)} />
         <Stat label="Collected" value={fmt(total)} />
         <Stat label="Awaiting confirmation" value={String(payments.filter((p) => p.status === "pending").length)} />
