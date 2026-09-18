@@ -26,7 +26,7 @@ export function MyBookings({ userId }: { userId: string }) {
     <div>
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h2 className="font-display text-3xl">Coaching sessions</h2>
-        <Button asChild variant="outline"><Link to="/book-a-session"><CalendarDays />Book a session</Link></Button>
+        <Button asChild variant="outline"><Link to="/book-a-session">Book a session</Link></Button>
       </div>
       <div className="mt-6 space-y-4">
         {bookings.map((b) => (

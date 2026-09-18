@@ -9,8 +9,8 @@ function mark(symbol: string, label?: string) {
 }
 
 function quietMark() {
-  return function QuietMark({ className, ...props }: MarkProps) {
-    return <span aria-hidden="true" className={className} {...props} />;
+  return function QuietMark(_props: MarkProps) {
+    return null;
   };
 }
 

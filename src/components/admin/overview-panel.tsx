@@ -74,8 +74,8 @@ export function OverviewPanel({ admin, onNavigate }: { admin: ReturnType<typeof 
       <div><p className="text-xs font-semibold uppercase text-primary">Today at a glance</p><h2 className="mt-2 font-display text-3xl md:text-4xl">Welcome back, Jackie.</h2><p className="mt-2 text-sm text-muted-foreground">Monitor learning, support students, and keep the studio moving.</p></div>
       <div className="flex gap-2"><Button onClick={() => onNavigate("courses")}><BookOpen />New course</Button><Button variant="outline" onClick={() => onNavigate("sessions")}><CalendarDays />Sessions</Button></div>
     </div>
-    <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
-      {cards.map(([label, value, Icon]) => <article key={label} className="rounded-sm border border-border bg-card p-5 "><div className="flex items-center justify-between"><Icon className="size-4 text-primary" /><span className="text-[10px] uppercase text-muted-foreground">Live</span></div><p className="mt-5 text-xs font-medium text-muted-foreground">{label}</p><p className="mt-1 text-2xl font-semibold">{value}</p></article>)}
+    <div className="grid gap-px border border-border bg-border sm:grid-cols-2 xl:grid-cols-4">
+      {cards.map(([label, value]) => <article key={label} className="bg-card p-5"><p className="text-xs font-medium text-muted-foreground">{label}</p><p className="mt-1 text-2xl font-semibold">{value}</p></article>)}
     </div>
     <div className="grid gap-6 xl:grid-cols-[1.45fr_.8fr]">
       <section className="overflow-hidden rounded-sm border border-border bg-card ">

@@ -170,13 +170,7 @@
   }
 
   /* Keep the interface editorial and tactile rather than glossy or generated. */
-  button,
-  input,
-  textarea,
-  select,
-  [role="dialog"],
-  [role="menu"],
-  [role="listbox"] {
+  *:not(.certificate-shell):not(.certificate-medallion) {
     box-shadow: none !important;
   }
 

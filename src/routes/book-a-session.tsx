@@ -71,8 +71,8 @@ function BookingPage() {
     <>
       <PageIntro eyebrow="Session requested" title="Your time is held." copy="Jackie reviews every request personally and will confirm your session by email." />
       <section className="mx-auto max-w-2xl px-5 py-16 text-center">
-        <Check className="mx-auto size-10 text-primary" />
-        <h2 className="mt-6 font-display text-4xl">{dateTimeLabel(confirmed)}</h2>
+        <p className="text-xs font-semibold uppercase tracking-[.16em] text-primary">Request received</p>
+        <h2 className="mt-4 font-display text-4xl">{dateTimeLabel(confirmed)}</h2>
         <p className="mt-4 leading-7 text-muted-foreground">{selectedType.label} · {selectedType.minutes} minutes. Payment is arranged directly with Jackie once your session is confirmed.</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Button asChild><Link to="/dashboard">Go to my learning</Link></Button>
@@ -95,7 +95,7 @@ function BookingPage() {
                   className={`border p-5 text-left transition-colors ${type === option.value ? "border-primary bg-primary/5" : "border-border bg-card hover:border-primary/50"}`}>
                   <p className="font-display text-xl">{option.label}</p>
                   <p className="mt-2 text-sm leading-6 text-muted-foreground">{option.copy}</p>
-                  <p className="mt-4 flex items-center gap-2 text-xs text-primary"><Clock3 className="size-3.5" />{option.minutes} minutes</p>
+                  <p className="mt-4 text-xs text-primary">{option.minutes} minutes</p>
                 </button>
               ))}
             </div>
@@ -107,10 +107,10 @@ function BookingPage() {
                   disabled={(date) => date < startOfDay(new Date()) || slotsForDay(date).length === 0} />
               </div>
               <div>
-                {!day && <p className="flex items-center gap-2 text-sm text-muted-foreground"><CalendarDays className="size-4" />Sessions run Monday to Friday. Select a date to see open times.</p>}
+                {!day && <p className="text-sm text-muted-foreground">Sessions run Monday to Friday. Select a date to see open times.</p>}
                 {day && slots.length === 0 && <p className="text-sm text-muted-foreground">No remaining times on this day. Please choose another date.</p>}
                 {day && slots.length > 0 && (
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                     {slots.map((s) => {
                       const isTaken = taken.includes(s.getTime().toString());
                       return (
@@ -134,7 +134,7 @@ function BookingPage() {
               <div><Label>Email</Label><Input className="mt-2" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></div>
               <div><Label>Phone (optional)</Label><Input className="mt-2" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} /></div>
               <div><Label>What would you like to focus on?</Label><Textarea className="mt-2" rows={4} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} /></div>
-              <Button className="w-full" onClick={submit} disabled={saving || !slot}>{saving && <Loader2 className="animate-spin" />}Request this session</Button>
+              <Button className="w-full" onClick={submit} disabled={saving || !slot}>{saving ? "Sending request" : "Request this session"}</Button>
               <p className="text-xs leading-6 text-muted-foreground">Requests are reviewed personally. Session fees are arranged directly with Jackie after confirmation.</p>
             </div>
           </div>
