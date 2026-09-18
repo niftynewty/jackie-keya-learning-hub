@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { navigation } from "@/lib/site-data";
 
-export function Wordmark() { return <Link to="/" className="flex items-center gap-3"><span className="grid size-9 place-items-center border border-primary text-lg font-medium text-primary">J</span><span><strong className="block font-display text-lg leading-none">Jackie Keya</strong><span className="text-[10px] uppercase tracking-[.2em] text-muted-foreground">Learning Hub</span></span></Link> }
+export function Wordmark() { return <Link to="/" className="flex items-center gap-3"><span className="grid size-9 place-items-center rounded-full border border-primary text-lg font-medium text-primary">J</span><span><strong className="block font-display text-lg leading-none">Jackie Keya</strong><span className="text-[10px] uppercase tracking-[.2em] text-muted-foreground">Learning Hub</span></span></Link> }
 
 export function SiteHeader() {
   const [open,setOpen]=useState(false); const [signedIn,setSignedIn]=useState(false); const router=useRouter();
