@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Loader2, ShieldCheck } from "lucide-react";
+import { Loader2, ShieldCheck } from "@/components/ui/icons";
 import { toast } from "sonner";
 import { meta } from "@/components/site/page";
 import { Button } from "@/components/ui/button";

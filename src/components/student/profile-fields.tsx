@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { Check } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -44,8 +43,8 @@ export function ChipField({ label, hint, values, options, onChange }: { label: s
           const active = values.includes(option);
           return (
             <button key={option} type="button" onClick={() => onChange(active ? values.filter((v) => v !== option) : [...values, option])}
-              className={cn("flex items-center gap-1.5 border px-3 py-1.5 text-xs transition-colors", active ? "border-primary bg-primary text-primary-foreground" : "border-border text-muted-foreground hover:border-primary hover:text-foreground")}>
-              {active && <Check className="size-3" />}{option}
+              className={cn("flex items-center gap-1.5 border px-3 py-1.5 text-xs", active ? "border-primary bg-primary text-primary-foreground" : "border-border text-muted-foreground hover:border-primary hover:text-foreground")}>
+              {option}
             </button>
           );
         })}

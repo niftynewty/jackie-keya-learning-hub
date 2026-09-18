@@ -4,7 +4,7 @@ import {
   Activity, Award, BadgeCheck, BarChart3, Bell, BookOpen, CalendarDays, ChevronLeft,
   ChevronRight, CircleDollarSign, FileText, GraduationCap, LayoutDashboard, Menu,
   PackageOpen, Percent, ReceiptText, Search, Settings, Star, Tags, Users, X,
-} from "lucide-react";
+} from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -67,7 +67,7 @@ export function AdminShell({ active, onChange, search, onSearch, children }: {
       <aside className={`${mobileOpen ? "translate-x-0" : "-translate-x-full"} ${collapsed ? "lg:w-20" : "lg:w-64"} fixed inset-y-0 left-0 z-50 flex w-72 flex-col bg-admin-sidebar text-admin-sidebar-foreground transition-all lg:sticky lg:top-0 lg:h-screen lg:translate-x-0`}>
         <div className="flex h-20 items-center justify-between border-b border-admin-sidebar-border px-5">
           <Link to="/" className="flex min-w-0 items-center gap-3">
-            <span className="grid size-9 shrink-0 place-items-center rounded-md bg-admin-sidebar-accent font-display text-xl text-admin-sidebar-accent-foreground">J</span>
+            <span className="grid size-9 shrink-0 place-items-center rounded-sm bg-admin-sidebar-accent font-display text-xl text-admin-sidebar-accent-foreground">J</span>
             {!collapsed && <span className="min-w-0"><strong className="block truncate font-display text-lg font-normal">Jackie Keya</strong><span className="block truncate text-[10px] uppercase text-admin-sidebar-muted">Learning Hub Admin</span></span>}
           </Link>
           <Button variant="ghost" size="icon" className="text-admin-sidebar-foreground lg:hidden" onClick={() => setMobileOpen(false)} aria-label="Close navigation"><X /></Button>
@@ -95,7 +95,7 @@ export function AdminShell({ active, onChange, search, onSearch, children }: {
       </aside>
 
       <div className="min-w-0 flex-1">
-        <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border bg-card/95 px-4 backdrop-blur md:px-7">
+        <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border bg-card/95 px-4 md:px-7">
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setMobileOpen(true)} aria-label="Open navigation"><Menu /></Button>
           <div className="min-w-0 flex-1">
             <h1 className="truncate text-base font-semibold md:text-lg">{adminViewLabels[active]}</h1>

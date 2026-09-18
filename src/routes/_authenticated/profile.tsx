@@ -3,7 +3,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import {
   ArrowLeft, Award, BadgeCheck, BookOpen, CalendarDays, Clock3, Download, Flame, Heart, KeyRound,
   Loader2, MapPin, ReceiptText, Save, ShieldCheck, Sparkles, Timer, UserRound,
-} from "lucide-react";
+} from "@/components/ui/icons";
 import { toast } from "sonner";
 import { meta } from "@/components/site/page";
 import { Button } from "@/components/ui/button";

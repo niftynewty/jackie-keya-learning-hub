@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
-import { Award, CalendarDays, CreditCard, Download, GraduationCap, Mail, Phone, RotateCcw, ShieldX, Sparkles, User } from "lucide-react";
+import { Award, CalendarDays, CreditCard, Download, GraduationCap, Mail, Phone, RotateCcw, ShieldX, Sparkles, User } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";

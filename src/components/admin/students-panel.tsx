@@ -1,5 +1,5 @@
 import { toast } from "sonner";
-import { Clock3, RotateCcw, UserSearch } from "lucide-react";
+import { Clock3, RotateCcw, UserSearch } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { supabase } from "@/integrations/supabase/client";

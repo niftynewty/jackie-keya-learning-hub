@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CalendarDays, Check, Clock3, Loader2 } from "lucide-react";
+import { CalendarDays, Check, Clock3, Loader2 } from "@/components/ui/icons";
 import { toast } from "sonner";
 import { PageIntro, meta } from "@/components/site/page";
 import { Button } from "@/components/ui/button";

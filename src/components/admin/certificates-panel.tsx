@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Award, BadgeCheck, Download, Eye, Plus, RefreshCw, RotateCcw, ShieldX } from "lucide-react";
+import { Award, BadgeCheck, Download, Eye, Plus, RefreshCw, RotateCcw, ShieldX } from "@/components/ui/icons";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
