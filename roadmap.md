@@ -19,3 +19,9 @@
 - [x] Extended profile data model (story, focus areas, preferences, privacy, activity)
 - [x] Private avatar uploads
 - [x] /profile page: identity header, completeness score, learning snapshot, journey, achievements, history, preferences, security & data export
+
+## Certificate studio
+- [ ] Add ten reusable certificate designs and course-level selection
+- [ ] Upgrade admin issuing, preview, revocation, and reissue controls
+- [ ] Add student certificate preview and PDF download
+- [ ] Validate all templates and certificate flows on desktop and mobile
