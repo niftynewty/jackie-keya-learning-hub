@@ -215,7 +215,7 @@ function ProfilePage() {
                         <p className="mt-1 text-xs text-muted-foreground">Awarded {dateLabel(awarded_at)}</p>
                       </div>
                     </div>
-                  )) : <p className="text-sm text-muted-foreground">No badges yet — they arrive as you complete milestones.</p>}
+                  )) : <p className="text-sm text-muted-foreground">No badges yet: they arrive as you complete milestones.</p>}
                 </div>
               </div>
               <div className="md:col-span-2">
@@ -319,7 +319,7 @@ function ProfilePage() {
                     {payments.map((p) => (
                       <tr key={p.id} className="border-b border-border">
                         <td className="p-3">{dateLabel(p.created_at)}</td>
-                        <td className="p-3">{courses.find((c) => c.id === p.course_id)?.title ?? "—"}</td>
+                        <td className="p-3">{courses.find((c) => c.id === p.course_id)?.title ?? "Not available"}</td>
                         <td className="p-3 font-semibold">{fmt(p.amount)}</td>
                         <td className="p-3">{p.provider === "mpesa_direct" ? "M-Pesa" : "Paystack"}</td>
                         <td className="p-3 font-mono text-xs">{p.provider_transaction_id}</td>

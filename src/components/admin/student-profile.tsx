@@ -82,7 +82,7 @@ export function StudentProfileSheet({ admin, studentId, trigger }: { admin: Retu
             <dl className="grid gap-3 sm:grid-cols-2">
               <Row label="Name" value={profile?.display_name || "Student"} />
               <Row label="Phone" value={profile?.phone || "Not provided"} icon={<Phone className="size-3.5" />} />
-              <Row label="Joined" value={profile ? date(profile.created_at) : "—"} />
+              <Row label="Joined" value={profile ? date(profile.created_at) : "Not available"} />
               <Row label="Email updates" value={profile?.email_notifications ? "On" : "Off"} icon={<Mail className="size-3.5" />} />
               <Row label="Learning reminders" value={profile?.learning_reminders ? "On" : "Off"} />
               <Row label="Student ID" value={studentId.slice(0, 8)} />
