@@ -187,6 +187,7 @@ export type Database = {
           recipient_name_formatted: string
           revoked_at: string | null
           status: string
+          template_id: string
           user_id: string
           verification_url: string | null
         }
@@ -200,6 +201,7 @@ export type Database = {
           recipient_name_formatted: string
           revoked_at?: string | null
           status?: string
+          template_id?: string
           user_id: string
           verification_url?: string | null
         }
@@ -213,6 +215,7 @@ export type Database = {
           recipient_name_formatted?: string
           revoked_at?: string | null
           status?: string
+          template_id?: string
           user_id?: string
           verification_url?: string | null
         }
@@ -359,6 +362,7 @@ export type Database = {
           access_days: number
           audience: string
           category: Database["public"]["Enums"]["course_category"]
+          certificate_template: string
           created_at: string
           description: string
           difficulty: string
@@ -386,6 +390,7 @@ export type Database = {
           access_days?: number
           audience: string
           category: Database["public"]["Enums"]["course_category"]
+          certificate_template?: string
           created_at?: string
           description: string
           difficulty?: string
@@ -413,6 +418,7 @@ export type Database = {
           access_days?: number
           audience?: string
           category?: Database["public"]["Enums"]["course_category"]
+          certificate_template?: string
           created_at?: string
           description?: string
           difficulty?: string
