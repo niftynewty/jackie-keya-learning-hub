@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Award, BadgeCheck, Download, Eye, Plus, RefreshCw, RotateCcw, ShieldX } from "lucide-react";
+import { Award, BadgeCheck, Download, Eye, Plus, RefreshCw, RotateCcw, ShieldX } from "@/components/ui/icons";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -46,7 +46,7 @@ export function CertificatesPanel({ admin }: { admin: ReturnType<typeof useAdmin
         <h2 className="font-display text-3xl">Certificates</h2>
         <IssueCertificateDialog admin={admin} />
       </div>
-      <div className="mt-6 grid gap-5 sm:grid-cols-3">
+      <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <Stat label="Certificates issued" value={String(data.certificates.length)} />
         <Stat label="Ready to issue" value={String(eligible.length)} />
         <Stat label="Active certificates" value={String(data.certificates.filter((c) => c.status !== "revoked").length)} />

@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Check, Clock3, BookOpen, CalendarDays, ArrowRight, PlayCircle } from "lucide-react";
+import { Check, Clock3, BookOpen, CalendarDays, ArrowRight, PlayCircle } from "@/components/ui/icons";
 import { PageIntro, meta } from "@/components/site/page";
 import { Button } from "@/components/ui/button";
 import { Accordion,AccordionContent,AccordionItem,AccordionTrigger } from "@/components/ui/accordion";

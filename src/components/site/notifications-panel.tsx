@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Bell, Check, Trash2 } from "lucide-react";
+import { Bell, Check, Trash2 } from "@/components/ui/icons";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -44,7 +44,7 @@ export function NotificationsPanel({ userId }: { userId: string }) {
     <div>
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h2 className="font-display text-3xl">Notifications {unread > 0 && <span className="align-middle text-sm text-primary">{unread} new</span>}</h2>
-        {unread > 0 && <Button variant="outline" size="sm" onClick={markAll}><Check />Mark all read</Button>}
+        {unread > 0 && <Button variant="outline" size="sm" onClick={markAll}>Mark all read</Button>}
       </div>
       <div className="mt-6 space-y-3">
         {items.map((n) => (
@@ -56,8 +56,8 @@ export function NotificationsPanel({ userId }: { userId: string }) {
               <p className="mt-3 text-xs text-muted-foreground">{new Date(n.created_at).toLocaleString()}</p>
             </div>
             <div className="flex items-center gap-2">
-              {!n.read_at && <Button variant="ghost" size="sm" onClick={() => markRead(n.id)}><Check />Read</Button>}
-              <Button variant="ghost" size="icon" aria-label="Delete notification" onClick={() => remove(n.id)}><Trash2 /></Button>
+              {!n.read_at && <Button variant="ghost" size="sm" onClick={() => markRead(n.id)}>Mark read</Button>}
+              <Button variant="ghost" size="sm" onClick={() => remove(n.id)}>Delete</Button>
             </div>
           </article>
         ))}

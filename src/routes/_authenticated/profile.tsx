@@ -3,7 +3,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import {
   ArrowLeft, Award, BadgeCheck, BookOpen, CalendarDays, Clock3, Download, Flame, Heart, KeyRound,
   Loader2, MapPin, ReceiptText, Save, ShieldCheck, Sparkles, Timer, UserRound,
-} from "lucide-react";
+} from "@/components/ui/icons";
 import { toast } from "sonner";
 import { meta } from "@/components/site/page";
 import { Button } from "@/components/ui/button";
@@ -113,7 +113,7 @@ function ProfilePage() {
   }
 
   if (!profile) {
-    return <section className="mx-auto grid max-w-7xl place-items-center px-5 py-32"><Loader2 className="size-6 animate-spin text-primary" /></section>;
+    return <section className="mx-auto grid max-w-7xl place-items-center px-5 py-32"><p className="text-sm text-muted-foreground">Loading profile</p></section>;
   }
 
   return (
@@ -215,7 +215,7 @@ function ProfilePage() {
                         <p className="mt-1 text-xs text-muted-foreground">Awarded {dateLabel(awarded_at)}</p>
                       </div>
                     </div>
-                  )) : <p className="text-sm text-muted-foreground">No badges yet — they arrive as you complete milestones.</p>}
+                  )) : <p className="text-sm text-muted-foreground">No badges yet: they arrive as you complete milestones.</p>}
                 </div>
               </div>
               <div className="md:col-span-2">
@@ -319,7 +319,7 @@ function ProfilePage() {
                     {payments.map((p) => (
                       <tr key={p.id} className="border-b border-border">
                         <td className="p-3">{dateLabel(p.created_at)}</td>
-                        <td className="p-3">{courses.find((c) => c.id === p.course_id)?.title ?? "—"}</td>
+                        <td className="p-3">{courses.find((c) => c.id === p.course_id)?.title ?? "Not available"}</td>
                         <td className="p-3 font-semibold">{fmt(p.amount)}</td>
                         <td className="p-3">{p.provider === "mpesa_direct" ? "M-Pesa" : "Paystack"}</td>
                         <td className="p-3 font-mono text-xs">{p.provider_transaction_id}</td>
@@ -398,5 +398,5 @@ function Empty({ copy, action }: { copy: string; action?: React.ReactNode }) {
 }
 
 function SaveButton({ saving, onClick }: { saving: boolean; onClick: () => void }) {
-  return <Button size="sm" onClick={onClick} disabled={saving}>{saving ? <Loader2 className="animate-spin" /> : <Save />}Save changes</Button>;
+  return <Button size="sm" onClick={onClick} disabled={saving}>{saving ? "Saving" : "Save changes"}</Button>;
 }

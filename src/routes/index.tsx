@@ -1,6 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
-import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { CourseCard } from "@/components/site/course-card";
 import { courses } from "@/lib/site-data";
@@ -40,14 +38,9 @@ function Index() {
           className="absolute inset-0 size-full object-cover object-[62%_center]"
           fetchPriority="high"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/5" />
+        <div className="absolute inset-0 bg-background/80 lg:right-[38%]" />
         <div className="relative mx-auto flex min-h-[calc(100vh-5rem)] max-w-7xl items-center px-5 py-20 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65 }}
-            className="max-w-2xl"
-          >
+          <div className="max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[.22em] text-primary">
               Healing fresh starts & harmonious blended families
             </p>
@@ -59,7 +52,7 @@ function Index() {
             <div className="mt-9 flex flex-wrap gap-3">
               <Button asChild size="lg">
                 <Link to="/courses">
-                  Explore courses <ArrowRight />
+                  Explore courses
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline">
@@ -80,7 +73,7 @@ function Index() {
                 <span className="text-xs text-muted-foreground">private, guided learning</span>
               </p>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
       <section className="mx-auto max-w-7xl px-5 py-24 lg:px-8">
@@ -94,10 +87,10 @@ function Index() {
           </div>
           <div className="grid sm:grid-cols-2">
             {paths.map(([title, copy, to], i) => (
-              <Link key={title} to={to} className="group border-t border-border py-7 sm:px-6 sm:odd:border-r">
+              <Link key={title} to={to} className="border-t border-border py-7 sm:px-6 sm:odd:border-r">
                 <h3 className="font-display text-2xl">{title}</h3>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">{copy}</p>
-                <ArrowRight className="mt-5 size-4 transition-transform group-hover:translate-x-1" />
+                <span className="mt-5 block text-xs font-semibold uppercase tracking-[.14em] text-primary">Explore this path</span>
               </Link>
             ))}
           </div>
@@ -112,7 +105,7 @@ function Index() {
             </div>
             <Button asChild variant="outline">
               <Link to="/courses">
-                View all courses <ArrowRight />
+                View all courses
               </Link>
             </Button>
           </div>

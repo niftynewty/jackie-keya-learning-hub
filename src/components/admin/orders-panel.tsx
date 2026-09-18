@@ -22,7 +22,7 @@ export function OrdersPanel({ names, courseTitles }: { names: Record<string, str
 
   return (
     <div>
-      <div className="grid gap-5 sm:grid-cols-3">
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <Stat label="Orders" value={String(payments.length)} />
         <Stat label="Collected" value={fmt(total)} />
         <Stat label="Awaiting confirmation" value={String(payments.filter((p) => p.status === "pending").length)} />
@@ -38,7 +38,7 @@ export function OrdersPanel({ names, courseTitles }: { names: Record<string, str
               <tr key={p.id} className="border-b border-border last:border-0">
                 <td className="p-4">{new Date(p.created_at).toLocaleDateString()}</td>
                 <td className="p-4">{names[p.user_id] ?? "Student"}</td>
-                <td className="p-4">{p.course_id ? courseTitles[p.course_id] ?? "—" : "—"}</td>
+                <td className="p-4">{p.course_id ? courseTitles[p.course_id] ?? "Not available" : "Not available"}</td>
                 <td className="p-4 font-semibold">{fmt(p.amount)}</td>
                 <td className="p-4">{p.provider === "mpesa_direct" ? "M-Pesa (manual)" : "Paystack"}</td>
                 <td className="p-4 font-mono text-xs">{p.provider_transaction_id}</td>

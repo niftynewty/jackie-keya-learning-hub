@@ -23,7 +23,7 @@ export function BookingsPanel() {
 
   return (
     <div>
-      <div className="grid gap-5 sm:grid-cols-3">
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <Stat label="Upcoming sessions" value={String(upcoming.length)} />
         <Stat label="Awaiting your reply" value={String(bookings.filter((b) => b.status === "pending").length)} />
         <Stat label="Completed" value={String(bookings.filter((b) => b.status === "completed").length)} />

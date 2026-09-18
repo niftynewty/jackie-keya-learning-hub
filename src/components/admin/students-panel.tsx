@@ -1,5 +1,5 @@
 import { toast } from "sonner";
-import { Clock3, RotateCcw, UserSearch } from "lucide-react";
+import { Clock3, RotateCcw, UserSearch } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { supabase } from "@/integrations/supabase/client";
@@ -28,7 +28,7 @@ export function StudentsPanel({ admin, search = "" }: { admin: ReturnType<typeof
 
   return (
     <div>
-      <div className="grid gap-5 sm:grid-cols-3">
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <Stat label="Students" value={String(data.profiles.length)} />
         <Stat label="Active enrolments" value={String(data.enrollments.filter((e) => e.status === "active" && new Date(e.expires_at) > new Date()).length)} />
         <Stat label="Lessons completed" value={String(data.progress.filter((p) => p.is_completed).length)} />
@@ -41,7 +41,7 @@ export function StudentsPanel({ admin, search = "" }: { admin: ReturnType<typeof
               <div className="flex items-center gap-3">
                 <p className="text-xs text-muted-foreground">Joined {new Date(profile.created_at).toLocaleDateString()}{profile.phone ? ` · ${profile.phone}` : ""}</p>
                 <StudentProfileSheet admin={admin} studentId={profile.id}
-                  trigger={<Button size="sm" variant="outline"><UserSearch />View full profile</Button>} />
+                  trigger={<Button size="sm" variant="outline">View full profile</Button>} />
               </div>
             </div>
             {enrollments.length ? (
@@ -51,8 +51,8 @@ export function StudentsPanel({ admin, search = "" }: { admin: ReturnType<typeof
                     <div className="flex flex-wrap items-center justify-between gap-3">
                       <p className="text-sm font-medium">{courseTitles[e.course_id] ?? "Course"}</p>
                       <div className="flex items-center gap-3">
-                        <span className="flex items-center gap-2 text-xs text-muted-foreground"><Clock3 className="size-3.5" />{e.status === "revoked" ? "Revoked" : `Until ${new Date(e.expires_at).toLocaleDateString()}`}</span>
-                        <Button size="sm" variant="outline" onClick={() => extend(e.id, e.expires_at)}><RotateCcw />Extend 42 days</Button>
+                        <span className="flex items-center gap-2 text-xs text-muted-foreground">{e.status === "revoked" ? "Revoked" : `Until ${new Date(e.expires_at).toLocaleDateString()}`}</span>
+                        <Button size="sm" variant="outline" onClick={() => extend(e.id, e.expires_at)}>Extend 42 days</Button>
                         <Button size="sm" variant="ghost" onClick={() => revoke(e.id)}>Revoke</Button>
                       </div>
                     </div>
