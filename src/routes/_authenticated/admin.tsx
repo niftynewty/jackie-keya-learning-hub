@@ -34,7 +34,7 @@ function AdminRoute() {
   const { user } = Route.useRouteContext();
   const [state, setState] = useState<"checking" | "allowed" | "denied">("checking");
   useEffect(() => { supabase.rpc("has_role", { _user_id: user.id, _role: "admin" }).then(({ data }) => setState(data ? "allowed" : "denied")); }, [user.id]);
-  if (state === "checking") return <div className="flex min-h-screen items-center justify-center bg-admin-canvas"><Loader2 className="size-6 animate-spin text-primary" /></div>;
+  if (state === "checking") return <div className="flex min-h-screen items-center justify-center bg-admin-canvas"><p className="text-sm text-muted-foreground">Loading admin workspace</p></div>;
   if (state === "denied") return <section className="mx-auto max-w-xl px-5 py-24 text-center"><ShieldCheck className="mx-auto size-10 text-primary"/><h1 className="mt-6 font-display text-4xl">Admin access required</h1><p className="mt-4 leading-7 text-muted-foreground">This workspace is reserved for approved administrators.</p><Button asChild variant="outline" className="mt-8"><Link to="/dashboard">Back to my learning</Link></Button></section>;
   return <AdminWorkspace />;
 }
@@ -45,7 +45,7 @@ function AdminWorkspace() {
   const [search, setSearch] = useState("");
   const [bookingCount, setBookingCount] = useState(0);
   useEffect(() => { supabase.from("bookings").select("id", { count: "exact", head: true }).then(({ count }) => setBookingCount(count ?? 0)); }, []);
-  if (admin.loading) return <div className="flex min-h-screen items-center justify-center bg-admin-canvas"><Loader2 className="size-6 animate-spin text-primary" /></div>;
+  if (admin.loading) return <div className="flex min-h-screen items-center justify-center bg-admin-canvas"><p className="text-sm text-muted-foreground">Loading admin workspace</p></div>;
   return <AdminShell active={view} onChange={setView} search={search} onSearch={setSearch}>
     {view === "overview" && <OverviewPanel admin={admin} onNavigate={setView}/>} 
     {view === "courses" && <CoursesPanel search={search}/>} 

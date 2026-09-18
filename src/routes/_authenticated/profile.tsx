@@ -113,7 +113,7 @@ function ProfilePage() {
   }
 
   if (!profile) {
-    return <section className="mx-auto grid max-w-7xl place-items-center px-5 py-32"><Loader2 className="size-6 animate-spin text-primary" /></section>;
+    return <section className="mx-auto grid max-w-7xl place-items-center px-5 py-32"><p className="text-sm text-muted-foreground">Loading profile</p></section>;
   }
 
   return (
@@ -398,5 +398,5 @@ function Empty({ copy, action }: { copy: string; action?: React.ReactNode }) {
 }
 
 function SaveButton({ saving, onClick }: { saving: boolean; onClick: () => void }) {
-  return <Button size="sm" onClick={onClick} disabled={saving}>{saving ? <Loader2 className="animate-spin" /> : <Save />}Save changes</Button>;
+  return <Button size="sm" onClick={onClick} disabled={saving}>{saving ? "Saving" : "Save changes"}</Button>;
 }
