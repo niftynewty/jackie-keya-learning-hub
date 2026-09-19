@@ -47,7 +47,6 @@ export function CertificateArtwork({ recipient, course, issuedAt, code, template
           <div className="certificate-medallion"><b>JK</b><small>LH</small></div>
           <div><span className="certificate-signature">Jackie Keya</span><small>Founder &amp; Coach</small></div>
         </div>
-        <p className="certificate-code">Verification ID · {code}</p>
       </div>
       {status === "revoked" && <div className="certificate-revoked-stamp">Revoked</div>}
     </div>
