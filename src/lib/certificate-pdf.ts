@@ -59,6 +59,5 @@ export async function downloadCertificatePdf(data: CertificatePdfData) {
   pdf.setFont("helvetica", "normal"); pdf.setFontSize(7); pdf.text("DATE ISSUED", 73.5, 176, { align: "center", charSpace: 1 }); pdf.text("FOUNDER & COACH", 223.5, 176, { align: "center", charSpace: 1 });
   pdf.setFillColor(`#${colors.dark}`); pdf.circle(center, 168, 13, "F"); pdf.setDrawColor(`#${colors.accent}`); pdf.setLineWidth(1.3); pdf.circle(center, 168, 10);
   pdf.setTextColor(`#${colors.background}`); pdf.setFont("times", "bold"); pdf.setFontSize(11); pdf.text("JK", center, 167, { align: "center" }); pdf.setFont("helvetica", "normal"); pdf.setFontSize(5); pdf.text("LEARNING HUB", center, 172, { align: "center", charSpace: 0.5 });
-  pdf.setTextColor(`#${colors.ink}`); pdf.setFontSize(7); pdf.text(`VERIFICATION ID  ·  ${data.code}`, center, 192, { align: "center", charSpace: 0.5 });
   pdf.save(`${safeFileName(data.course)}-${safeFileName(data.recipient)}.pdf`);
 }

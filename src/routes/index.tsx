@@ -69,8 +69,8 @@ function Index() {
                 <span className="text-xs text-muted-foreground">days of course access</span>
               </p>
               <p>
-                <strong className="block font-display text-3xl">Your pace</strong>
-                <span className="text-xs text-muted-foreground">private, guided learning</span>
+                <strong className="block font-display text-3xl">15+ years</strong>
+                <span className="text-xs text-muted-foreground">of expertise</span>
               </p>
             </div>
           </div>
@@ -118,7 +118,7 @@ function Index() {
       </section>
       <section className="mx-auto max-w-5xl px-5 py-24 text-center">
         <p className="font-display text-4xl leading-tight md:text-5xl">
-          “Healing is not about returning to who you were. It is learning to trust who you are becoming.”
+          "You are not stuck. You may simply be repeating what you've never learned to do differently."
         </p>
         <p className="mt-6 text-sm font-semibold text-primary">Jackie Keya</p>
       </section>
