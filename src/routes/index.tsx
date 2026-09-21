@@ -30,16 +30,16 @@ function Index() {
   ] as const;
   return (
     <>
-      <section className="relative min-h-[calc(100vh-5rem)] overflow-hidden">
+      <section className="relative min-h-[calc(100vh-5rem)] overflow-hidden bg-background">
         <img
           src={hero}
           alt="Jackie Keya, family and relationship coach"
           width={1600}
           height={1104}
-          className="absolute inset-0 size-full object-cover object-[62%_center]"
+          className="absolute inset-y-0 right-0 h-full w-auto max-w-none object-cover object-center"
           fetchPriority="high"
         />
-        <div className="absolute inset-0 bg-background/80 lg:right-[38%]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/0 lg:w-[58%]" />
         <div className="relative mx-auto flex min-h-[calc(100vh-5rem)] max-w-7xl items-center px-5 py-20 lg:px-8">
           <div className="max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[.22em] text-primary">
