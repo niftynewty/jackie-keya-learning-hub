@@ -36,10 +36,11 @@ function Index() {
           alt="Jackie Keya, family and relationship coach"
           width={1600}
           height={1104}
-          className="absolute inset-y-0 right-0 h-full w-auto max-w-none object-cover object-center"
+          className="absolute inset-y-0 right-0 h-full w-[44%] max-w-none object-cover object-[42%_center]"
           fetchPriority="high"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/0 lg:w-[58%]" />
+        <div className="absolute inset-y-0 left-0 w-[60%] bg-background" />
+        <div className="absolute inset-y-0 left-[55%] w-[12%] bg-gradient-to-r from-background to-transparent" />
         <div className="relative mx-auto flex min-h-[calc(100vh-5rem)] max-w-7xl items-center px-5 py-20 lg:px-8">
           <div className="max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[.22em] text-primary">
