@@ -49,17 +49,15 @@ function Checkout() {
         .single();
       if (courseError || !record) throw courseError ?? new Error("Course not found");
       const ref = `SIM-${Date.now()}-${Math.random().toString(36).slice(2, 7).toUpperCase()}`;
-      const { error: paymentError } = await supabase
-        .from("payments")
-        .insert({
-          user_id: user.id,
-          course_id: record.id,
-          amount: total,
-          currency: "KES",
-          provider: method,
-          provider_transaction_id: ref,
-          status: "successful",
-        });
+      const { error: paymentError } = await supabase.from("payments").insert({
+        user_id: user.id,
+        course_id: record.id,
+        amount: total,
+        currency: "KES",
+        provider: method,
+        provider_transaction_id: ref,
+        status: "successful",
+      });
       if (paymentError) throw paymentError;
       const { error: enrollmentError } = await supabase
         .from("enrollments")

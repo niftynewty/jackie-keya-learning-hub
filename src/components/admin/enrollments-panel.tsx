@@ -30,14 +30,12 @@ export function EnrollmentsPanel({ admin }: { admin: ReturnType<typeof useAdminD
     const accessDays = data.courses.find((item) => item.id === course)?.access_days ?? 42;
     const expires = new Date();
     expires.setDate(expires.getDate() + accessDays);
-    const { error } = await supabase
-      .from("enrollments")
-      .insert({
-        user_id: student,
-        course_id: course,
-        expires_at: expires.toISOString(),
-        status: "active",
-      });
+    const { error } = await supabase.from("enrollments").insert({
+      user_id: student,
+      course_id: course,
+      expires_at: expires.toISOString(),
+      status: "active",
+    });
     if (error) {
       toast.error(error.message);
       return;

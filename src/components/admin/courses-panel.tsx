@@ -180,14 +180,12 @@ export function CoursesPanel({ search = "" }: { search?: string }) {
   }
   async function addLesson(moduleId: string) {
     const count = lessons.filter((l) => l.module_id === moduleId).length;
-    const { error } = await supabase
-      .from("lessons")
-      .insert({
-        module_id: moduleId,
-        title: "New lesson",
-        sort_order: count + 1,
-        duration_seconds: 600,
-      });
+    const { error } = await supabase.from("lessons").insert({
+      module_id: moduleId,
+      title: "New lesson",
+      sort_order: count + 1,
+      duration_seconds: 600,
+    });
     if (error) {
       toast.error(error.message);
       return;
