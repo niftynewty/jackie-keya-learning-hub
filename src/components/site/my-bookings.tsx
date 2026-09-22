@@ -13,7 +13,11 @@ export function MyBookings({ userId }: { userId: string }) {
   const [bookings, setBookings] = useState<Booking[]>([]);
 
   useEffect(() => {
-    supabase.from("bookings").select("*").eq("user_id", userId).order("scheduled_for", { ascending: false })
+    supabase
+      .from("bookings")
+      .select("*")
+      .eq("user_id", userId)
+      .order("scheduled_for", { ascending: false })
       .then(({ data }) => setBookings(data ?? []));
   }, [userId]);
 
@@ -23,7 +27,7 @@ export function MyBookings({ userId }: { userId: string }) {
       toast.error(error.message);
       return;
     }
-    setBookings((list) => list.map((b) => b.id === id ? { ...b, status: "cancelled" } : b));
+    setBookings((list) => list.map((b) => (b.id === id ? { ...b, status: "cancelled" } : b)));
     toast.success("Session cancelled");
   }
 
@@ -31,20 +35,36 @@ export function MyBookings({ userId }: { userId: string }) {
     <div>
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h2 className="font-display text-3xl">Coaching sessions</h2>
-        <Button asChild variant="outline"><Link to="/book-a-session">Book a session</Link></Button>
+        <Button asChild variant="outline">
+          <Link to="/book-a-session">Book a session</Link>
+        </Button>
       </div>
       <div className="mt-6 space-y-4">
         {bookings.map((b) => (
-          <article key={b.id} className="flex flex-wrap items-start justify-between gap-4 border border-border bg-card p-6">
+          <article
+            key={b.id}
+            className="flex flex-wrap items-start justify-between gap-4 border border-border bg-card p-6"
+          >
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[.16em] text-primary">{sessionTypeLabel(b.session_type)} · {b.duration_minutes} min</p>
+              <p className="text-xs font-semibold uppercase tracking-[.16em] text-primary">
+                {sessionTypeLabel(b.session_type)} · {b.duration_minutes} min
+              </p>
               <h3 className="mt-3 font-display text-2xl">{dateTimeLabel(b.scheduled_for)}</h3>
               <p className="mt-2 text-sm capitalize text-muted-foreground">Status: {b.status}</p>
             </div>
-            {b.status !== "cancelled" && b.status !== "completed" && <Button variant="ghost" size="sm" onClick={() => cancel(b.id)}>Cancel</Button>}
+            {b.status !== "cancelled" && b.status !== "completed" && (
+              <Button variant="ghost" size="sm" onClick={() => cancel(b.id)}>
+                Cancel
+              </Button>
+            )}
           </article>
         ))}
-        {!bookings.length && <p className="text-sm leading-7 text-muted-foreground">No sessions booked yet. A private conversation with Jackie can sit alongside your course work.</p>}
+        {!bookings.length && (
+          <p className="text-sm leading-7 text-muted-foreground">
+            No sessions booked yet. A private conversation with Jackie can sit alongside your course
+            work.
+          </p>
+        )}
       </div>
     </div>
   );

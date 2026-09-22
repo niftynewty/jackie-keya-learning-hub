@@ -1,10 +1,27 @@
 import { useMemo, useState } from "react";
-import { Award, BadgeCheck, Download, Eye, Plus, RefreshCw, RotateCcw, ShieldX } from "@/components/ui/icons";
+import {
+  Award,
+  BadgeCheck,
+  Download,
+  Eye,
+  Plus,
+  RefreshCw,
+  RotateCcw,
+  ShieldX,
+} from "@/components/ui/icons";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import type { useAdminData } from "./data";
 import { Stat } from "./orders-panel";
@@ -20,14 +37,19 @@ export function CertificatesPanel({ admin }: { admin: ReturnType<typeof useAdmin
   const { data, names, courseTitles, percent, reload } = admin;
   const [busy, setBusy] = useState<string | null>(null);
 
-  const eligible = data.enrollments.filter((e) =>
-    percent(e.user_id, e.course_id) === 100 && !data.certificates.some((c) => c.user_id === e.user_id && c.course_id === e.course_id));
+  const eligible = data.enrollments.filter(
+    (e) =>
+      percent(e.user_id, e.course_id) === 100 &&
+      !data.certificates.some((c) => c.user_id === e.user_id && c.course_id === e.course_id),
+  );
 
   async function issue(userId: string, courseId: string) {
     setBusy(`${userId}-${courseId}`);
     const course = data.courses.find((item) => item.id === courseId);
     const { error } = await supabase.from("certificates").insert({
-      user_id: userId, course_id: courseId, certificate_number: newCode(),
+      user_id: userId,
+      course_id: courseId,
+      certificate_number: newCode(),
       recipient_name_formatted: names[userId] ?? "Student",
       template_id: course?.certificate_template ?? "heritage-curve",
     });
@@ -41,7 +63,13 @@ export function CertificatesPanel({ admin }: { admin: ReturnType<typeof useAdmin
   }
 
   async function setStatus(id: string, revoked: boolean) {
-    const { error } = await supabase.from("certificates").update({ status: revoked ? "revoked" : "valid", revoked_at: revoked ? new Date().toISOString() : null }).eq("id", id);
+    const { error } = await supabase
+      .from("certificates")
+      .update({
+        status: revoked ? "revoked" : "valid",
+        revoked_at: revoked ? new Date().toISOString() : null,
+      })
+      .eq("id", id);
     if (error) {
       toast.error(error.message);
       return;
@@ -59,37 +87,110 @@ export function CertificatesPanel({ admin }: { admin: ReturnType<typeof useAdmin
       <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <Stat label="Certificates issued" value={String(data.certificates.length)} />
         <Stat label="Ready to issue" value={String(eligible.length)} />
-        <Stat label="Active certificates" value={String(data.certificates.filter((c) => c.status !== "revoked").length)} />
+        <Stat
+          label="Active certificates"
+          value={String(data.certificates.filter((c) => c.status !== "revoked").length)}
+        />
       </div>
 
       <h3 className="mt-10 font-display text-2xl">Ready to issue</h3>
       <div className="mt-4 space-y-3">
         {eligible.map((e) => (
-          <div key={e.id} className="flex flex-wrap items-center justify-between gap-4 border border-border bg-card p-5">
-            <p className="text-sm"><span className="font-medium">{names[e.user_id] ?? "Student"}</span> completed {courseTitles[e.course_id] ?? "a course"}.</p>
-            <Button size="sm" disabled={busy === `${e.user_id}-${e.course_id}`} onClick={() => issue(e.user_id, e.course_id)}><BadgeCheck />Issue certificate</Button>
+          <div
+            key={e.id}
+            className="flex flex-wrap items-center justify-between gap-4 border border-border bg-card p-5"
+          >
+            <p className="text-sm">
+              <span className="font-medium">{names[e.user_id] ?? "Student"}</span> completed{" "}
+              {courseTitles[e.course_id] ?? "a course"}.
+            </p>
+            <Button
+              size="sm"
+              disabled={busy === `${e.user_id}-${e.course_id}`}
+              onClick={() => issue(e.user_id, e.course_id)}
+            >
+              <BadgeCheck />
+              Issue certificate
+            </Button>
           </div>
         ))}
-        {!eligible.length && <p className="text-sm text-muted-foreground">No completions are waiting for a certificate right now.</p>}
+        {!eligible.length && (
+          <p className="text-sm text-muted-foreground">
+            No completions are waiting for a certificate right now.
+          </p>
+        )}
       </div>
 
       <h3 className="mt-10 font-display text-2xl">Issued certificates</h3>
       <div className="mt-4 space-y-3">
         {data.certificates.map((c) => (
-          <div key={c.id} className="grid gap-5 border border-border bg-card p-5 lg:grid-cols-[260px_1fr_auto] lg:items-center">
-            <CertificateArtwork compact recipient={c.recipient_name_formatted} course={courseTitles[c.course_id] ?? "Course"} issuedAt={c.issued_at} code={c.certificate_number} templateId={c.template_id} status={c.status} />
+          <div
+            key={c.id}
+            className="grid gap-5 border border-border bg-card p-5 lg:grid-cols-[260px_1fr_auto] lg:items-center"
+          >
+            <CertificateArtwork
+              compact
+              recipient={c.recipient_name_formatted}
+              course={courseTitles[c.course_id] ?? "Course"}
+              issuedAt={c.issued_at}
+              code={c.certificate_number}
+              templateId={c.template_id}
+              status={c.status}
+            />
             <div>
-              <p className="flex items-center gap-2 font-display text-xl italic"><Award className="size-4 text-primary" />{c.recipient_name_formatted}</p>
-              <p className="mt-1 text-sm text-muted-foreground">{courseTitles[c.course_id] ?? "Course"} · {c.certificate_number}</p>
-              <p className="mt-1 text-xs capitalize text-muted-foreground">{getCertificateTemplate(c.template_id).name} · {new Date(c.issued_at).toLocaleDateString()} · {c.status}</p>
+              <p className="flex items-center gap-2 font-display text-xl italic">
+                <Award className="size-4 text-primary" />
+                {c.recipient_name_formatted}
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {courseTitles[c.course_id] ?? "Course"} · {c.certificate_number}
+              </p>
+              <p className="mt-1 text-xs capitalize text-muted-foreground">
+                {getCertificateTemplate(c.template_id).name} ·{" "}
+                {new Date(c.issued_at).toLocaleDateString()} · {c.status}
+              </p>
             </div>
             <div className="flex flex-wrap gap-2 lg:max-w-40">
-              <Button size="sm" variant="outline" onClick={() => downloadCertificatePdf({ recipient: c.recipient_name_formatted, course: courseTitles[c.course_id] ?? "Course", issuedAt: c.issued_at, code: c.certificate_number, templateId: c.template_id })} disabled={c.status === "revoked"}><Download />Download</Button>
-              <Button size="sm" variant="outline" onClick={() => setStatus(c.id, c.status !== "revoked")}>{c.status === "revoked" ? <><RotateCcw />Restore</> : <><ShieldX />Revoke</>}</Button>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() =>
+                  downloadCertificatePdf({
+                    recipient: c.recipient_name_formatted,
+                    course: courseTitles[c.course_id] ?? "Course",
+                    issuedAt: c.issued_at,
+                    code: c.certificate_number,
+                    templateId: c.template_id,
+                  })
+                }
+                disabled={c.status === "revoked"}
+              >
+                <Download />
+                Download
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setStatus(c.id, c.status !== "revoked")}
+              >
+                {c.status === "revoked" ? (
+                  <>
+                    <RotateCcw />
+                    Restore
+                  </>
+                ) : (
+                  <>
+                    <ShieldX />
+                    Revoke
+                  </>
+                )}
+              </Button>
             </div>
           </div>
         ))}
-        {!data.certificates.length && <p className="text-sm text-muted-foreground">No certificates issued yet.</p>}
+        {!data.certificates.length && (
+          <p className="text-sm text-muted-foreground">No certificates issued yet.</p>
+        )}
       </div>
     </div>
   );
@@ -121,14 +222,28 @@ function IssueCertificateDialog({ admin }: { admin: ReturnType<typeof useAdminDa
   }
 
   function reset() {
-    setQuery(""); setUserId(""); setCourseId(""); setName(""); setCode(newCode()); setTemplateId("heritage-curve");
+    setQuery("");
+    setUserId("");
+    setCourseId("");
+    setName("");
+    setCode(newCode());
+    setTemplateId("heritage-curve");
     setIssuedAt(new Date().toISOString().slice(0, 10));
   }
 
   async function save() {
-    if (!userId) { toast.error("Choose a student first"); return; }
-    if (!courseId) { toast.error("Choose a course"); return; }
-    if (!code.trim()) { toast.error("A verification code is required"); return; }
+    if (!userId) {
+      toast.error("Choose a student first");
+      return;
+    }
+    if (!courseId) {
+      toast.error("Choose a course");
+      return;
+    }
+    if (!code.trim()) {
+      toast.error("A verification code is required");
+      return;
+    }
     setSaving(true);
     const { error } = await supabase.from("certificates").insert({
       user_id: userId,
@@ -139,50 +254,99 @@ function IssueCertificateDialog({ admin }: { admin: ReturnType<typeof useAdminDa
       template_id: templateId,
     });
     setSaving(false);
-    if (error) { toast.error(error.message); return; }
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success("Certificate created and added to the student's portal");
-    setOpen(false); reset(); reload();
+    setOpen(false);
+    reset();
+    reload();
   }
 
   return (
-    <Dialog open={open} onOpenChange={(o) => { setOpen(o); if (!o) reset(); }}>
+    <Dialog
+      open={open}
+      onOpenChange={(o) => {
+        setOpen(o);
+        if (!o) reset();
+      }}
+    >
       <DialogTrigger asChild>
-        <Button><Plus />Issue new certificate</Button>
+        <Button>
+          <Plus />
+          Issue new certificate
+        </Button>
       </DialogTrigger>
-       <DialogContent className="max-h-[92vh] overflow-y-auto sm:max-w-5xl">
+      <DialogContent className="max-h-[92vh] overflow-y-auto sm:max-w-5xl">
         <DialogHeader>
           <DialogTitle className="font-display text-2xl">Issue a certificate</DialogTitle>
-          <DialogDescription>Choose the student and the course they completed. The certificate appears in their portal straight away.</DialogDescription>
+          <DialogDescription>
+            Choose the student and the course they completed. The certificate appears in their
+            portal straight away.
+          </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-5">
           <div>
             <Label>Student</Label>
-            <Input className="mt-2" aria-label="Search students by name or phone" value={query} onChange={(e) => setQuery(e.target.value)} />
+            <Input
+              className="mt-2"
+              aria-label="Search students by name or phone"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
             <div className="mt-2 max-h-44 overflow-y-auto border border-border">
               {students.map((p) => (
-                <button key={p.id} type="button" onClick={() => selectStudent(p.id)}
-                  className={`flex w-full items-center justify-between px-3 py-2 text-left text-sm ${userId === p.id ? "bg-primary text-primary-foreground" : "hover:bg-muted"}`}>
+                <button
+                  key={p.id}
+                  type="button"
+                  onClick={() => selectStudent(p.id)}
+                  className={`flex w-full items-center justify-between px-3 py-2 text-left text-sm ${userId === p.id ? "bg-primary text-primary-foreground" : "hover:bg-muted"}`}
+                >
                   <span>{p.display_name || "Student"}</span>
                   <span className="text-xs opacity-70">{p.phone ?? ""}</span>
                 </button>
               ))}
-              {!students.length && <p className="px-3 py-2 text-sm text-muted-foreground">No students match that search.</p>}
+              {!students.length && (
+                <p className="px-3 py-2 text-sm text-muted-foreground">
+                  No students match that search.
+                </p>
+              )}
             </div>
           </div>
 
           <div>
             <Label htmlFor="cert-course">Course completed</Label>
-            <select id="cert-course" value={courseId} onChange={(e) => { const id = e.target.value; setCourseId(id); setTemplateId(data.courses.find((c) => c.id === id)?.certificate_template ?? "heritage-curve"); }}
-              className="mt-2 h-10 w-full border border-input bg-background px-3 text-sm">
+            <select
+              id="cert-course"
+              value={courseId}
+              onChange={(e) => {
+                const id = e.target.value;
+                setCourseId(id);
+                setTemplateId(
+                  data.courses.find((c) => c.id === id)?.certificate_template ?? "heritage-curve",
+                );
+              }}
+              className="mt-2 h-10 w-full border border-input bg-background px-3 text-sm"
+            >
               <option value="">Select a course</option>
-              {data.courses.map((c) => <option key={c.id} value={c.id}>{c.title}</option>)}
+              {data.courses.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.title}
+                </option>
+              ))}
             </select>
           </div>
 
           <div>
             <Label htmlFor="cert-name">Name on the certificate</Label>
-            <Input id="cert-name" className="mt-2" value={name} onChange={(e) => setName(e.target.value)} />
+            <Input
+              id="cert-name"
+              className="mt-2"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
@@ -190,30 +354,70 @@ function IssueCertificateDialog({ admin }: { admin: ReturnType<typeof useAdminDa
               <Label htmlFor="cert-code">Verification code</Label>
               <div className="mt-2 flex items-center gap-2">
                 <Input id="cert-code" value={code} onChange={(e) => setCode(e.target.value)} />
-                <Button type="button" size="icon" variant="outline" onClick={() => setCode(newCode())} aria-label="Generate a new code"><RefreshCw /></Button>
+                <Button
+                  type="button"
+                  size="icon"
+                  variant="outline"
+                  onClick={() => setCode(newCode())}
+                  aria-label="Generate a new code"
+                >
+                  <RefreshCw />
+                </Button>
               </div>
             </div>
             <div>
               <Label htmlFor="cert-date">Issue date</Label>
-              <Input id="cert-date" className="mt-2" type="date" value={issuedAt} onChange={(e) => setIssuedAt(e.target.value)} />
+              <Input
+                id="cert-date"
+                className="mt-2"
+                type="date"
+                value={issuedAt}
+                onChange={(e) => setIssuedAt(e.target.value)}
+              />
             </div>
           </div>
 
           <div>
             <Label>Certificate template</Label>
             <div className="mt-2 flex gap-2 overflow-x-auto pb-2">
-              {certificateTemplates.map((template) => <button key={template.id} type="button" onClick={() => setTemplateId(template.id)} className={`min-w-36 border p-3 text-left ${templateId === template.id ? "border-primary bg-primary/10" : "border-border"}`}><span className="text-sm font-medium">{template.name}</span><span className="mt-1 block text-xs text-muted-foreground">{template.description}</span></button>)}
+              {certificateTemplates.map((template) => (
+                <button
+                  key={template.id}
+                  type="button"
+                  onClick={() => setTemplateId(template.id)}
+                  className={`min-w-36 border p-3 text-left ${templateId === template.id ? "border-primary bg-primary/10" : "border-border"}`}
+                >
+                  <span className="text-sm font-medium">{template.name}</span>
+                  <span className="mt-1 block text-xs text-muted-foreground">
+                    {template.description}
+                  </span>
+                </button>
+              ))}
             </div>
           </div>
           <div>
-            <div className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-muted-foreground"><Eye className="size-4"/>Live preview</div>
-            <CertificateArtwork recipient={name || "Student Name"} course={selectedCourse?.title ?? "Course title"} issuedAt={`${issuedAt}T09:00:00`} code={code || "JKLH-PREVIEW"} templateId={templateId}/>
+            <div className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-muted-foreground">
+              <Eye className="size-4" />
+              Live preview
+            </div>
+            <CertificateArtwork
+              recipient={name || "Student Name"}
+              course={selectedCourse?.title ?? "Course title"}
+              issuedAt={`${issuedAt}T09:00:00`}
+              code={code || "JKLH-PREVIEW"}
+              templateId={templateId}
+            />
           </div>
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-          <Button disabled={saving} onClick={save}><BadgeCheck />{saving ? "Saving…" : "Create certificate"}</Button>
+          <Button variant="outline" onClick={() => setOpen(false)}>
+            Cancel
+          </Button>
+          <Button disabled={saving} onClick={save}>
+            <BadgeCheck />
+            {saving ? "Saving…" : "Create certificate"}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
