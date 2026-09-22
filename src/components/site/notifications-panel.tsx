@@ -18,16 +18,28 @@ export function NotificationsPanel({ userId }: { userId: string }) {
   async function markRead(id: string) {
     const read_at = new Date().toISOString();
     const { error } = await supabase.from("notifications").update({ read_at }).eq("id", id);
-    error ? toast.error(error.message) : setItems((list) => list.map((n) => n.id === id ? { ...n, read_at } : n));
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    setItems((list) => list.map((n) => n.id === id ? { ...n, read_at } : n));
   }
   async function markAll() {
     const read_at = new Date().toISOString();
     const { error } = await supabase.from("notifications").update({ read_at }).eq("user_id", userId).is("read_at", null);
-    error ? toast.error(error.message) : setItems((list) => list.map((n) => n.read_at ? n : { ...n, read_at }));
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    setItems((list) => list.map((n) => n.read_at ? n : { ...n, read_at }));
   }
   async function remove(id: string) {
     const { error } = await supabase.from("notifications").delete().eq("id", id);
-    error ? toast.error(error.message) : setItems((list) => list.filter((n) => n.id !== id));
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    setItems((list) => list.filter((n) => n.id !== id));
   }
 
   const unread = items.filter((n) => !n.read_at).length;

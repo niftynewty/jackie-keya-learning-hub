@@ -32,12 +32,22 @@ export function CertificatesPanel({ admin }: { admin: ReturnType<typeof useAdmin
       template_id: course?.certificate_template ?? "heritage-curve",
     });
     setBusy(null);
-    error ? toast.error(error.message) : (toast.success("Certificate issued"), reload());
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success("Certificate issued");
+    reload();
   }
 
   async function setStatus(id: string, revoked: boolean) {
     const { error } = await supabase.from("certificates").update({ status: revoked ? "revoked" : "valid", revoked_at: revoked ? new Date().toISOString() : null }).eq("id", id);
-    error ? toast.error(error.message) : (toast.success(revoked ? "Certificate revoked" : "Certificate restored"), reload());
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success(revoked ? "Certificate revoked" : "Certificate restored");
+    reload();
   }
 
   return (
@@ -148,7 +158,7 @@ function IssueCertificateDialog({ admin }: { admin: ReturnType<typeof useAdminDa
         <div className="space-y-5">
           <div>
             <Label>Student</Label>
-            <Input className="mt-2" placeholder="Search students by name or phone" value={query} onChange={(e) => setQuery(e.target.value)} />
+            <Input className="mt-2" aria-label="Search students by name or phone" value={query} onChange={(e) => setQuery(e.target.value)} />
             <div className="mt-2 max-h-44 overflow-y-auto border border-border">
               {students.map((p) => (
                 <button key={p.id} type="button" onClick={() => selectStudent(p.id)}
@@ -172,7 +182,7 @@ function IssueCertificateDialog({ admin }: { admin: ReturnType<typeof useAdminDa
 
           <div>
             <Label htmlFor="cert-name">Name on the certificate</Label>
-            <Input id="cert-name" className="mt-2" placeholder="Full name as it should appear" value={name} onChange={(e) => setName(e.target.value)} />
+            <Input id="cert-name" className="mt-2" value={name} onChange={(e) => setName(e.target.value)} />
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">

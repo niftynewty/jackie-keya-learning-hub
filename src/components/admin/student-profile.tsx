@@ -55,17 +55,32 @@ export function StudentProfileSheet({ admin, studentId, trigger }: { admin: Retu
     const base = new Date(expiresAt) > new Date() ? new Date(expiresAt) : new Date();
     base.setDate(base.getDate() + 42);
     const { error } = await supabase.from("enrollments").update({ expires_at: base.toISOString(), status: "active" }).eq("id", id);
-    error ? toast.error(error.message) : (toast.success("Access extended by 42 days"), reload());
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success("Access extended by 42 days");
+    reload();
   }
 
   async function setStatus(id: string, status: "active" | "revoked") {
     const { error } = await supabase.from("enrollments").update({ status }).eq("id", id);
-    error ? toast.error(error.message) : (toast.success(status === "active" ? "Access restored" : "Access revoked"), reload());
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success(status === "active" ? "Access restored" : "Access revoked");
+    reload();
   }
 
   async function setCertificateStatus(id: string, revoked: boolean) {
     const { error } = await supabase.from("certificates").update({ status: revoked ? "revoked" : "valid", revoked_at: revoked ? new Date().toISOString() : null }).eq("id", id);
-    error ? toast.error(error.message) : (toast.success(revoked ? "Certificate revoked" : "Certificate restored"), reload());
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success(revoked ? "Certificate revoked" : "Certificate restored");
+    reload();
   }
 
   return (
@@ -164,8 +179,8 @@ export function StudentProfileSheet({ admin, studentId, trigger }: { admin: Retu
           </Section>
 
           <Section icon={<Mail className="size-4" />} title="Send a message">
-            <Input placeholder="Message title" value={note.title} onChange={(e) => setNote({ ...note, title: e.target.value })} />
-            <Input placeholder="Short note (optional)" value={note.body} onChange={(e) => setNote({ ...note, body: e.target.value })} />
+            <Input aria-label="Message title" value={note.title} onChange={(e) => setNote({ ...note, title: e.target.value })} />
+            <Input aria-label="Message body" value={note.body} onChange={(e) => setNote({ ...note, body: e.target.value })} />
             <Button size="sm" disabled={sending} onClick={sendNote}>{sending ? "Sending…" : "Send to student"}</Button>
           </Section>
         </div>

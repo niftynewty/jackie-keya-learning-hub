@@ -86,11 +86,19 @@ export function CoursesPanel({ search = "" }: { search?: string }) {
   async function addModule() {
     if (!draft) return;
     const { error } = await supabase.from("modules").insert({ course_id: draft.id, title: "New module", sort_order: modules.length + 1 });
-    error ? toast.error(error.message) : loadCurriculum(draft.id);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    loadCurriculum(draft.id);
   }
   async function saveModule(module: Module) {
     const { error } = await supabase.from("modules").update({ title: module.title, description: module.description, sort_order: module.sort_order, is_published: module.is_published }).eq("id", module.id);
-    error ? toast.error(error.message) : toast.success("Module saved");
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success("Module saved");
   }
   async function removeModule(id: string) {
     const { error } = await supabase.from("modules").delete().eq("id", id);
@@ -110,7 +118,11 @@ export function CoursesPanel({ search = "" }: { search?: string }) {
       written_content: lesson.written_content, thumbnail_url: lesson.thumbnail_url, resource_label: lesson.resource_label,
       resource_url: lesson.resource_url, is_required: lesson.is_required, access_level: lesson.access_level, completion_rule: lesson.completion_rule,
     }).eq("id", lesson.id);
-    error ? toast.error(error.message) : toast.success("Lesson saved");
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success("Lesson saved");
   }
   async function removeLesson(id: string) {
     const { error } = await supabase.from("lessons").delete().eq("id", id);

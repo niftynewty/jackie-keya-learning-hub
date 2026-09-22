@@ -19,7 +19,12 @@ export function MyBookings({ userId }: { userId: string }) {
 
   async function cancel(id: string) {
     const { error } = await supabase.from("bookings").update({ status: "cancelled" }).eq("id", id);
-    error ? toast.error(error.message) : (setBookings((list) => list.map((b) => b.id === id ? { ...b, status: "cancelled" } : b)), toast.success("Session cancelled"));
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    setBookings((list) => list.map((b) => b.id === id ? { ...b, status: "cancelled" } : b));
+    toast.success("Session cancelled");
   }
 
   return (

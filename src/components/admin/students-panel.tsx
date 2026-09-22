@@ -14,11 +14,21 @@ export function StudentsPanel({ admin, search = "" }: { admin: ReturnType<typeof
     const base = new Date(expiresAt) > new Date() ? new Date(expiresAt) : new Date();
     base.setDate(base.getDate() + 42);
     const { error } = await supabase.from("enrollments").update({ expires_at: base.toISOString(), status: "active" }).eq("id", enrollmentId);
-    error ? toast.error(error.message) : (toast.success("Access extended by 42 days"), reload());
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success("Access extended by 42 days");
+    reload();
   }
   async function revoke(enrollmentId: string) {
     const { error } = await supabase.from("enrollments").update({ status: "revoked" }).eq("id", enrollmentId);
-    error ? toast.error(error.message) : (toast.success("Access revoked"), reload());
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success("Access revoked");
+    reload();
   }
 
   const students = data.profiles.map((profile) => ({
