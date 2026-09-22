@@ -2,8 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageIntro } from "@/components/site/page";
 import { meta } from "@/components/site/page-meta";
 import { Button } from "@/components/ui/button";
-import heroAsset from "@/assets/jackie-hero.jpg.asset.json";
-const hero = heroAsset.url;
+import hero from "@/assets/jackie-hero.jpg";
+
 export const Route = createFileRoute("/about")({
   head: () =>
     meta(

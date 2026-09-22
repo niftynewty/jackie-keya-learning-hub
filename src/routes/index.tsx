@@ -3,13 +3,11 @@ import { Button } from "@/components/ui/button";
 import { CourseCard } from "@/components/site/course-card";
 import { courses } from "@/lib/site-data";
 import { meta } from "@/components/site/page-meta";
-import heroAsset from "@/assets/jackie-hero.jpg.asset.json";
-const hero = heroAsset.url;
-
+import hero from "@/assets/jackie-hero.jpg";
 export const Route = createFileRoute("/")({
   head: () =>
     meta(
-      "Find your way forward",
+      "Jackie Keya Learning Hub",
       "Compassionate online courses for emotional healing, new beginnings, and stronger blended families.",
     ),
   component: Index,
