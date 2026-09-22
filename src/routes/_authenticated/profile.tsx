@@ -254,13 +254,13 @@ function ProfilePage() {
             <div className="grid gap-6 md:grid-cols-2">
               <TextField label="Full name" value={profile.display_name} onChange={(display_name) => patch({ display_name })} />
               <TextField label="Headline" hint="A one-line note about your season, e.g. “Rebuilding gently after divorce”." value={profile.headline ?? ""} onChange={(headline) => patch({ headline })} />
-              <TextField label="Phone number" value={profile.phone ?? ""} onChange={(phone) => patch({ phone })} placeholder="+254 7xx xxx xxx" />
+              <TextField label="Phone number" value={profile.phone ?? ""} onChange={(phone) => patch({ phone })} />
               <TextField label="WhatsApp number" value={profile.whatsapp ?? ""} onChange={(whatsapp) => patch({ whatsapp })} />
               <TextField label="City" value={profile.city ?? ""} onChange={(city) => patch({ city })} />
               <TextField label="Country" value={profile.country ?? ""} onChange={(country) => patch({ country })} />
               <TextField label="Date of birth" type="date" value={profile.date_of_birth ?? ""} onChange={(date_of_birth) => patch({ date_of_birth: date_of_birth || null })} />
               <ChoiceField label="Gender" value={profile.gender ?? ""} options={GENDERS} onChange={(gender) => patch({ gender: gender || null })} />
-              <TextField label="Pronouns" value={profile.pronouns ?? ""} onChange={(pronouns) => patch({ pronouns })} placeholder="she/her" />
+              <TextField label="Pronouns" value={profile.pronouns ?? ""} onChange={(pronouns) => patch({ pronouns })} />
               <TextField label="Work or occupation" value={profile.occupation ?? ""} onChange={(occupation) => patch({ occupation })} />
               <ChoiceField label="Time zone" value={profile.timezone} options={TIMEZONES} allowEmpty={false} onChange={(timezone) => patch({ timezone })} />
               <ChoiceField label="Preferred language" value={profile.preferred_language} options={LANGUAGES} allowEmpty={false} onChange={(preferred_language) => patch({ preferred_language })} />
@@ -278,8 +278,8 @@ function ProfilePage() {
         <TabsContent value="story" className="mt-8 space-y-6">
           <SectionCard title="Your story and focus" copy="This helps Jackie recommend the right courses and prepare for your sessions." actions={<SaveButton saving={saving} onClick={save} />}>
             <div className="space-y-6">
-              <AreaField label="About you" hint="Share as much or as little as you like." value={profile.bio ?? ""} onChange={(bio) => patch({ bio })} placeholder="Tell Jackie a little about where you are right now..." />
-              <AreaField label="What you hope to gain" value={profile.goals ?? ""} onChange={(goals) => patch({ goals })} placeholder="Peace with my past, calmer co-parenting, confidence to start again..." rows={3} />
+              <AreaField label="About you" hint="Share as much or as little as you like." value={profile.bio ?? ""} onChange={(bio) => patch({ bio })} />
+              <AreaField label="What you hope to gain" value={profile.goals ?? ""} onChange={(goals) => patch({ goals })} rows={3} />
               <ChoiceField label="Current season" value={profile.life_stage ?? ""} options={LIFE_STAGES} onChange={(life_stage) => patch({ life_stage: life_stage || null })} />
               <ChipField label="Focus areas" hint="Pick everything that feels relevant." values={profile.focus_areas} options={FOCUS_AREAS} onChange={(focus_areas) => patch({ focus_areas })} />
               <div className="grid gap-6 md:grid-cols-2">

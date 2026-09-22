@@ -103,7 +103,7 @@ export function AdminShell({ active, onChange, search, onSearch, children }: {
           </div>
           <div className="relative hidden w-full max-w-xs md:block">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-            <Input className="bg-muted pl-9" placeholder="Search this workspace…" value={search} onChange={(event) => onSearch(event.target.value)} />
+            <Input className="bg-muted pl-9" aria-label="Search this workspace" value={search} onChange={(event) => onSearch(event.target.value)} />
           </div>
           <Button variant="ghost" size="icon" aria-label="Notifications"><Bell /><span className="sr-only">Notifications</span></Button>
           <div className="hidden items-center gap-3 border-l border-border pl-4 sm:flex">

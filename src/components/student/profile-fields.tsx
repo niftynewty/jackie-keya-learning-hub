@@ -15,12 +15,12 @@ export function Field({ label, hint, children }: { label: string; hint?: string 
   );
 }
 
-export function TextField({ label, hint, value, onChange, type = "text", placeholder }: { label: string; hint?: string | undefined; value: string; onChange: (v: string) => void; type?: string; placeholder?: string | undefined }) {
-  return <Field label={label} hint={hint}><Input type={type} value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} /></Field>;
+export function TextField({ label, hint, value, onChange, type = "text" }: { label: string; hint?: string | undefined; value: string; onChange: (v: string) => void; type?: string }) {
+  return <Field label={label} hint={hint}><Input type={type} value={value} onChange={(e) => onChange(e.target.value)} /></Field>;
 }
 
-export function AreaField({ label, hint, value, onChange, placeholder, rows = 4 }: { label: string; hint?: string | undefined; value: string; onChange: (v: string) => void; placeholder?: string | undefined; rows?: number }) {
-  return <Field label={label} hint={hint}><Textarea rows={rows} value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} /></Field>;
+export function AreaField({ label, hint, value, onChange, rows = 4 }: { label: string; hint?: string | undefined; value: string; onChange: (v: string) => void; rows?: number }) {
+  return <Field label={label} hint={hint}><Textarea rows={rows} value={value} onChange={(e) => onChange(e.target.value)} /></Field>;
 }
 
 export function ChoiceField({ label, hint, value, options, onChange, allowEmpty = true }: { label: string; hint?: string | undefined; value: string; options: ReadonlyArray<string | readonly [string, string]>; onChange: (v: string) => void; allowEmpty?: boolean }) {
