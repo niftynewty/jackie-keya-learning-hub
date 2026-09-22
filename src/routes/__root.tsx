@@ -84,7 +84,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Healing fresh starts and harmonious blended families." },
       { name: "author", content: "Jackie Keya Learning Hub" },
       { property: "og:title", content: "Jackie Keya Learning Hub" },
-      { property: "og:description", content: "Healing fresh starts and harmonious blended families." },
+      {
+        property: "og:description",
+        content: "Healing fresh starts and harmonious blended families.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -95,7 +98,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;500;600;700&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;500;600;700&display=swap",
+      },
       { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
     ],
   }),
@@ -126,7 +132,9 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       {!isAdmin && <SiteHeader />}
-      <main><Outlet /></main>
+      <main>
+        <Outlet />
+      </main>
       {!isAdmin && <SiteFooter />}
       <Toaster richColors />
     </QueryClientProvider>

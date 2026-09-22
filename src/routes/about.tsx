@@ -1,3 +1,70 @@
-import{createFileRoute,Link}from"@tanstack/react-router";import{PageIntro,meta}from"@/components/site/page";import{Button}from"@/components/ui/button";import heroAsset from"@/assets/jackie-hero.jpg.asset.json";const hero=heroAsset.url;
-export const Route=createFileRoute("/about")({head:()=>meta("About Jackie Keya","Meet Jackie Keya and discover her human, practical approach to emotional healing and family relationships."),component:Page});
-function Page(){return <><PageIntro eyebrow="Meet your guide" title="Warmth, wisdom, and practical support for the road ahead." copy="Jackie Keya helps people navigate emotional transitions and family complexity with honesty, compassion, and tools that fit real life."/><section className="mx-auto grid max-w-7xl gap-14 px-5 py-20 lg:grid-cols-[.8fr_1.2fr] lg:px-8"><img src={hero} alt="Portrait of Jackie Keya" className="aspect-[4/5] size-full object-cover object-[65%_center]"/><div><p className="text-xs font-semibold uppercase tracking-[.18em] text-primary">The person behind the learning hub</p><h2 className="mt-5 font-display text-4xl">Clear, caring guidance for the road ahead.</h2><div className="mt-7 space-y-5 text-base leading-8 text-muted-foreground"><p>Jackie’s work is grounded in the belief that meaningful change begins when people feel safe enough to tell the truth about where they are.</p><p>Her teaching brings emotional insight together with practical tools for heartbreak, new relationships, step-parenting, co-parenting, communication, and blended-family life.</p><p>The Learning Hub was created to make that support available privately and at your own pace, while keeping the experience personal, hopeful, and deeply human.</p></div><div className="mt-10 grid gap-5 sm:grid-cols-2"><div className="border-t border-border pt-5"><strong className="font-display text-2xl">Areas of expertise</strong><p className="mt-2 text-sm leading-6 text-muted-foreground">Life transitions, relationships, family dynamics, boundaries, communication.</p></div><div className="border-t border-border pt-5"><strong className="font-display text-2xl">Core philosophy</strong><p className="mt-2 text-sm leading-6 text-muted-foreground">Change begins when you stop repeating what no longer works.</p></div></div><Button asChild className="mt-10"><Link to="/courses">Learn with Jackie</Link></Button></div></section></>}
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { PageIntro } from "@/components/site/page";
+import { meta } from "@/components/site/page-meta";
+import { Button } from "@/components/ui/button";
+import heroAsset from "@/assets/jackie-hero.jpg.asset.json";
+const hero = heroAsset.url;
+export const Route = createFileRoute("/about")({
+  head: () =>
+    meta(
+      "About Jackie Keya",
+      "Meet Jackie Keya and discover her human, practical approach to emotional healing and family relationships.",
+    ),
+  component: Page,
+});
+function Page() {
+  return (
+    <>
+      <PageIntro
+        eyebrow="Meet your guide"
+        title="Warmth, wisdom, and practical support for the road ahead."
+        copy="Jackie Keya helps people navigate emotional transitions and family complexity with honesty, compassion, and tools that fit real life."
+      />
+      <section className="mx-auto grid max-w-7xl gap-14 px-5 py-20 lg:grid-cols-[.8fr_1.2fr] lg:px-8">
+        <img
+          src={hero}
+          alt="Portrait of Jackie Keya"
+          className="aspect-[4/5] size-full object-cover object-[65%_center]"
+        />
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[.18em] text-primary">
+            The person behind the learning hub
+          </p>
+          <h2 className="mt-5 font-display text-4xl">Clear, caring guidance for the road ahead.</h2>
+          <div className="mt-7 space-y-5 text-base leading-8 text-muted-foreground">
+            <p>
+              Jackie’s work is grounded in the belief that meaningful change begins when people feel
+              safe enough to tell the truth about where they are.
+            </p>
+            <p>
+              Her teaching brings emotional insight together with practical tools for heartbreak,
+              new relationships, step-parenting, co-parenting, communication, and blended-family
+              life.
+            </p>
+            <p>
+              The Learning Hub was created to make that support available privately and at your own
+              pace, while keeping the experience personal, hopeful, and deeply human.
+            </p>
+          </div>
+          <div className="mt-10 grid gap-5 sm:grid-cols-2">
+            <div className="border-t border-border pt-5">
+              <strong className="font-display text-2xl">Areas of expertise</strong>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                Life transitions, relationships, family dynamics, boundaries, communication.
+              </p>
+            </div>
+            <div className="border-t border-border pt-5">
+              <strong className="font-display text-2xl">Core philosophy</strong>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                Change begins when you stop repeating what no longer works.
+              </p>
+            </div>
+          </div>
+          <Button asChild className="mt-10">
+            <Link to="/courses">Learn with Jackie</Link>
+          </Button>
+        </div>
+      </section>
+    </>
+  );
+}

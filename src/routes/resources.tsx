@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { PageIntro, meta } from "@/components/site/page";
+import { PageIntro } from "@/components/site/page";
+import { meta } from "@/components/site/page-meta";
 export const Route = createFileRoute("/resources")({
   head: () =>
     meta("Free resources", "Resources for healing and family wellbeing from Jackie Keya."),

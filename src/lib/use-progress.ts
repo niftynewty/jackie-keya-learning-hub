@@ -38,10 +38,18 @@ export function useProgress(userId: string): ProgressSummary {
     });
   }, [userId]);
 
-  const total = (courseId: string) => [...lessonCourse.values()].filter((id) => id === courseId).length;
-  const completed = (courseId: string) => [...done].filter((lessonId) => lessonCourse.get(lessonId) === courseId).length;
-  const percent = (courseId: string) => { const t = total(courseId); return t ? Math.round((completed(courseId) / t) * 100) : 0; };
-  const minutesLearned = [...done].reduce((sum, lessonId) => sum + (lessonMinutes.get(lessonId) ?? 0), 0);
+  const total = (courseId: string) =>
+    [...lessonCourse.values()].filter((id) => id === courseId).length;
+  const completed = (courseId: string) =>
+    [...done].filter((lessonId) => lessonCourse.get(lessonId) === courseId).length;
+  const percent = (courseId: string) => {
+    const t = total(courseId);
+    return t ? Math.round((completed(courseId) / t) * 100) : 0;
+  };
+  const minutesLearned = [...done].reduce(
+    (sum, lessonId) => sum + (lessonMinutes.get(lessonId) ?? 0),
+    0,
+  );
 
   return { percent, completed, total, completedLessons: done.size, minutesLearned, ready };
 }

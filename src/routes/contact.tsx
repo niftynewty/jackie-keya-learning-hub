@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { PageIntro, meta } from "@/components/site/page";
+import { PageIntro } from "@/components/site/page";
+import { meta } from "@/components/site/page-meta";
 export const Route = createFileRoute("/contact")({
   head: () =>
     meta("Contact", "Contact the Jackie Keya Learning Hub for course and support questions."),

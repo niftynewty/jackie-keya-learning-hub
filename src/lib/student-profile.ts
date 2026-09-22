@@ -26,10 +26,35 @@ export const FOCUS_AREAS = [
   "Faith & inner peace",
 ] as const;
 
-export const RELATIONSHIP_STATUS = ["Single", "Dating", "Engaged", "Married", "Separated", "Divorced", "Widowed", "Prefer not to say"] as const;
-export const FAMILY_SITUATIONS = ["No children", "Biological parent", "Step-parent", "Blended household", "Co-parenting apart", "Guardian or caregiver"] as const;
+export const RELATIONSHIP_STATUS = [
+  "Single",
+  "Dating",
+  "Engaged",
+  "Married",
+  "Separated",
+  "Divorced",
+  "Widowed",
+  "Prefer not to say",
+] as const;
+export const FAMILY_SITUATIONS = [
+  "No children",
+  "Biological parent",
+  "Step-parent",
+  "Blended household",
+  "Co-parenting apart",
+  "Guardian or caregiver",
+] as const;
 export const GENDERS = ["Woman", "Man", "Non-binary", "Prefer not to say"] as const;
-export const REFERRAL_SOURCES = ["Instagram", "Facebook", "WhatsApp", "Friend or family", "Radio or TV", "Google search", "Church or group", "Other"] as const;
+export const REFERRAL_SOURCES = [
+  "Instagram",
+  "Facebook",
+  "WhatsApp",
+  "Friend or family",
+  "Radio or TV",
+  "Google search",
+  "Church or group",
+  "Other",
+] as const;
 export const LANGUAGES = ["English", "Swahili", "English & Swahili"] as const;
 export const CONTACT_METHODS = [
   ["email", "Email"],
@@ -43,7 +68,15 @@ export const REMINDER_TIMES = [
   ["evening", "Evening (7–9pm)"],
   ["none", "No reminders"],
 ] as const;
-export const TIMEZONES = ["Africa/Nairobi", "Africa/Kampala", "Africa/Lagos", "Africa/Johannesburg", "Europe/London", "America/New_York", "Asia/Dubai"] as const;
+export const TIMEZONES = [
+  "Africa/Nairobi",
+  "Africa/Kampala",
+  "Africa/Lagos",
+  "Africa/Johannesburg",
+  "Europe/London",
+  "America/New_York",
+  "Asia/Dubai",
+] as const;
 export const VISIBILITY = [
   ["private", "Private — only Jackie's team"],
   ["community", "Community — share first name with fellow students"],
@@ -67,21 +100,52 @@ export const COMPLETENESS_FIELDS: Array<{ key: keyof StudentProfile; label: stri
   { key: "referral_source", label: "How you found us" },
 ];
 
-const filled = (value: unknown) => Array.isArray(value) ? value.length > 0 : typeof value === "string" ? value.trim().length > 0 : value !== null && value !== undefined;
+const filled = (value: unknown) =>
+  Array.isArray(value)
+    ? value.length > 0
+    : typeof value === "string"
+      ? value.trim().length > 0
+      : value !== null && value !== undefined;
 
 export function completeness(profile: StudentProfile) {
   const missing = COMPLETENESS_FIELDS.filter((field) => !filled(profile[field.key]));
-  const percent = Math.round(((COMPLETENESS_FIELDS.length - missing.length) / COMPLETENESS_FIELDS.length) * 100);
-  return { percent, missing, total: COMPLETENESS_FIELDS.length, done: COMPLETENESS_FIELDS.length - missing.length };
+  const percent = Math.round(
+    ((COMPLETENESS_FIELDS.length - missing.length) / COMPLETENESS_FIELDS.length) * 100,
+  );
+  return {
+    percent,
+    missing,
+    total: COMPLETENESS_FIELDS.length,
+    done: COMPLETENESS_FIELDS.length - missing.length,
+  };
 }
 
 /** Engagement tier from real learning activity — used for the warm status badge. */
 export function engagementTier(lessons: number, minutes: number, courses: number) {
   const score = lessons * 3 + Math.round(minutes / 10) + courses * 5;
-  if (score >= 60) return { label: "Devoted learner", copy: "You show up consistently. That steadiness is doing quiet work.", tone: "bg-primary text-primary-foreground" };
-  if (score >= 30) return { label: "Steady rhythm", copy: "You are building a real habit of gentle progress.", tone: "bg-accent text-accent-foreground" };
-  if (score >= 8) return { label: "Finding your pace", copy: "You have begun, and beginning is the hardest part.", tone: "bg-secondary text-secondary-foreground" };
-  return { label: "New here", copy: "Welcome. Take the first lesson whenever you feel ready.", tone: "bg-muted text-foreground" };
+  if (score >= 60)
+    return {
+      label: "Devoted learner",
+      copy: "You show up consistently. That steadiness is doing quiet work.",
+      tone: "bg-primary text-primary-foreground",
+    };
+  if (score >= 30)
+    return {
+      label: "Steady rhythm",
+      copy: "You are building a real habit of gentle progress.",
+      tone: "bg-accent text-accent-foreground",
+    };
+  if (score >= 8)
+    return {
+      label: "Finding your pace",
+      copy: "You have begun, and beginning is the hardest part.",
+      tone: "bg-secondary text-secondary-foreground",
+    };
+  return {
+    label: "New here",
+    copy: "Welcome. Take the first lesson whenever you feel ready.",
+    tone: "bg-muted text-foreground",
+  };
 }
 
 export function recency(lastActive: string | null) {
@@ -90,8 +154,16 @@ export function recency(lastActive: string | null) {
   if (days <= 0) return { label: "Active today", days };
   if (days === 1) return { label: "Active yesterday", days };
   if (days < 7) return { label: `Active ${days} days ago`, days };
-  if (days < 30) return { label: `Active ${Math.floor(days / 7)} week${days < 14 ? "" : "s"} ago`, days };
+  if (days < 30)
+    return { label: `Active ${Math.floor(days / 7)} week${days < 14 ? "" : "s"} ago`, days };
   return { label: `Away for ${Math.floor(days / 30)} month${days < 60 ? "" : "s"}`, days };
 }
 
-export const dateLabel = (value?: string | null) => value ? new Date(value).toLocaleDateString("en-KE", { day: "numeric", month: "long", year: "numeric" }) : "—";
+export const dateLabel = (value?: string | null) =>
+  value
+    ? new Date(value).toLocaleDateString("en-KE", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })
+    : "—";

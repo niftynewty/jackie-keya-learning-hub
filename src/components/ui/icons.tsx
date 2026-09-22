@@ -4,7 +4,16 @@ type MarkProps = HTMLAttributes<HTMLSpanElement>;
 
 function mark(symbol: string, label?: string) {
   return function TypographicMark({ className, ...props }: MarkProps) {
-    return <span aria-hidden={label ? undefined : true} aria-label={label} className={className} {...props}>{symbol}</span>;
+    return (
+      <span
+        aria-hidden={label ? undefined : true}
+        aria-label={label}
+        className={className}
+        {...props}
+      >
+        {symbol}
+      </span>
+    );
   };
 }
 

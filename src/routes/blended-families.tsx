@@ -1,6 +1,71 @@
-import { createFileRoute,Link } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "@/components/ui/icons";
-import { PageIntro,meta } from "@/components/site/page";import {CourseCard} from "@/components/site/course-card";import{Button}from"@/components/ui/button";import{courses}from"@/lib/site-data";import family from"@/assets/blended-family.jpg";
-export const Route=createFileRoute("/blended-families")({head:()=>meta("Blended family support","Guidance for step-parents, co-parents, couples, and children building trust and belonging together."),component:Page});
-function Page(){return <><PageIntro eyebrow="Blended family support" title="Harmony is built, one honest moment at a time." copy="Blending a family asks everyone to adjust. Find grounded guidance for the roles, boundaries, communication, and connection that help a new family take root."/><section className="mx-auto grid max-w-7xl gap-12 px-5 py-20 lg:grid-cols-2 lg:px-8"><img src={family} alt="A blended family sharing a warm moment together" className="aspect-[4/3] size-full object-cover"/><div className="grid content-center gap-9"><Support title="Belonging without pressure" copy="Build trust at a pace that honours every family member’s story."/><Support title="Boundaries that feel safe" copy="Create clear roles without asking anyone to replace an existing parent."/><Support title="Calmer communication" copy="Navigate loyalty conflicts, expectations, discipline, and co-parenting with care."/></div></section><section className="bg-card"><div className="mx-auto max-w-7xl px-5 py-20 lg:px-8"><h2 className="font-display text-5xl">Courses for your family</h2><div className="mt-8 grid gap-10 md:grid-cols-2">{courses.filter(c=>c.category==="blended_family").map(c=><CourseCard key={c.id} course={c}/>)}</div><Button asChild className="mt-10"><Link to="/book-a-session">Work with Jackie</Link></Button></div></section></>}
-function Support({title,copy}:{title:string,copy:string}){return <div className="border-t border-border pt-6"><h2 className="font-display text-2xl">{title}</h2><p className="mt-2 leading-7 text-muted-foreground">{copy}</p></div>}
+import { PageIntro } from "@/components/site/page";
+import { meta } from "@/components/site/page-meta";
+import { CourseCard } from "@/components/site/course-card";
+import { Button } from "@/components/ui/button";
+import { courses } from "@/lib/site-data";
+import family from "@/assets/blended-family.jpg";
+export const Route = createFileRoute("/blended-families")({
+  head: () =>
+    meta(
+      "Blended family support",
+      "Guidance for step-parents, co-parents, couples, and children building trust and belonging together.",
+    ),
+  component: Page,
+});
+function Page() {
+  return (
+    <>
+      <PageIntro
+        eyebrow="Blended family support"
+        title="Harmony is built, one honest moment at a time."
+        copy="Blending a family asks everyone to adjust. Find grounded guidance for the roles, boundaries, communication, and connection that help a new family take root."
+      />
+      <section className="mx-auto grid max-w-7xl gap-12 px-5 py-20 lg:grid-cols-2 lg:px-8">
+        <img
+          src={family}
+          alt="A blended family sharing a warm moment together"
+          className="aspect-[4/3] size-full object-cover"
+        />
+        <div className="grid content-center gap-9">
+          <Support
+            title="Belonging without pressure"
+            copy="Build trust at a pace that honours every family member’s story."
+          />
+          <Support
+            title="Boundaries that feel safe"
+            copy="Create clear roles without asking anyone to replace an existing parent."
+          />
+          <Support
+            title="Calmer communication"
+            copy="Navigate loyalty conflicts, expectations, discipline, and co-parenting with care."
+          />
+        </div>
+      </section>
+      <section className="bg-card">
+        <div className="mx-auto max-w-7xl px-5 py-20 lg:px-8">
+          <h2 className="font-display text-5xl">Courses for your family</h2>
+          <div className="mt-8 grid gap-10 md:grid-cols-2">
+            {courses
+              .filter((c) => c.category === "blended_family")
+              .map((c) => (
+                <CourseCard key={c.id} course={c} />
+              ))}
+          </div>
+          <Button asChild className="mt-10">
+            <Link to="/book-a-session">Work with Jackie</Link>
+          </Button>
+        </div>
+      </section>
+    </>
+  );
+}
+function Support({ title, copy }: { title: string; copy: string }) {
+  return (
+    <div className="border-t border-border pt-6">
+      <h2 className="font-display text-2xl">{title}</h2>
+      <p className="mt-2 leading-7 text-muted-foreground">{copy}</p>
+    </div>
+  );
+}

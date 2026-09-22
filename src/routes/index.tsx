@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { CourseCard } from "@/components/site/course-card";
 import { courses } from "@/lib/site-data";
-import { meta } from "@/components/site/page";
+import { meta } from "@/components/site/page-meta";
 import heroAsset from "@/assets/jackie-hero.jpg.asset.json";
 const hero = heroAsset.url;
 

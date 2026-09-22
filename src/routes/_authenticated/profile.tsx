@@ -21,7 +21,7 @@ import {
   UserRound,
 } from "@/components/ui/icons";
 import { toast } from "sonner";
-import { meta } from "@/components/site/page";
+import { meta } from "@/components/site/page-meta";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";

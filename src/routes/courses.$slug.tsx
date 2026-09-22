@@ -1,9 +1,125 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Check, Clock3, BookOpen, CalendarDays, ArrowRight, PlayCircle } from "@/components/ui/icons";
-import { PageIntro, meta } from "@/components/site/page";
+import {
+  Check,
+  Clock3,
+  BookOpen,
+  CalendarDays,
+  ArrowRight,
+  PlayCircle,
+} from "@/components/ui/icons";
+import { PageIntro } from "@/components/site/page";
+import { meta } from "@/components/site/page-meta";
 import { Button } from "@/components/ui/button";
-import { Accordion,AccordionContent,AccordionItem,AccordionTrigger } from "@/components/ui/accordion";
-import { courses,fmt } from "@/lib/site-data";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { courses, fmt } from "@/lib/site-data";
 
-export const Route=createFileRoute("/courses/$slug")({loader:({params})=>{const course=courses.find(c=>c.slug===params.slug);if(!course)throw notFound();return course},head:({loaderData})=>meta(loaderData?.title??"Course unavailable",loaderData?.short??"Course details from Jackie Keya Learning Hub."),component:Detail,notFoundComponent:()=> <PageIntro eyebrow="Course unavailable" title="We couldn't find that course." copy="Explore the full course collection to find the right next step."/>});
-function Detail(){const c=Route.useLoaderData();const modules=c.category==="fresh_start"?["Understanding what you are carrying","Releasing with compassion","Building your next chapter"]:["Understanding the blended family system","Trust, roles, and boundaries","Communication that creates belonging"];return <><PageIntro eyebrow={c.tone} title={c.title} copy={c.short}/><section className="mx-auto grid max-w-7xl gap-14 px-5 py-16 lg:grid-cols-[1.35fr_.65fr] lg:px-8"><div><h2 className="font-display text-4xl">What you’ll walk away with</h2><p className="mt-5 text-lg leading-8 text-muted-foreground">{c.outcome}</p><h2 className="mt-14 font-display text-4xl">This course is for you if…</h2><p className="mt-5 leading-8 text-muted-foreground">{c.audience}</p><h2 className="mt-14 font-display text-4xl">Your learning path</h2><Accordion type="single" collapsible className="mt-5">{modules.map((m,i)=><AccordionItem value={`${i}`} key={m}><AccordionTrigger className="text-base"><span><small className="mr-4 text-primary">0{i+1}</small>{m}</span></AccordionTrigger><AccordionContent><div className="space-y-3 pl-10 text-muted-foreground"><p className="flex gap-2"><PlayCircle className="size-4 shrink-0"/>Guided video lesson</p><p className="flex gap-2"><Check className="size-4 shrink-0"/>Reflection and practical exercise</p></div></AccordionContent></AccordionItem>)}</Accordion></div><aside className="h-fit border border-border bg-card p-7 lg:sticky lg:top-28"><p className="text-xs font-semibold uppercase tracking-[.18em] text-primary">Start learning today</p>{c.original&&<p className="mt-6 text-sm text-muted-foreground line-through">{fmt(c.original)}</p>}<p className="font-display text-4xl">{fmt(c.price)}</p><p className="mt-2 text-xs text-muted-foreground">One-time payment · KES</p><div className="my-7 space-y-4 border-y border-border py-6 text-sm"><p className="flex gap-3"><BookOpen className="size-4 text-primary"/>{c.modules} modules · {c.lessons} lessons</p><p className="flex gap-3"><Clock3 className="size-4 text-primary"/>{c.duration} of guided learning</p><p className="flex gap-3"><CalendarDays className="size-4 text-primary"/>42 days of access</p></div><Button asChild className="w-full" size="lg"><Link to="/checkout/$slug" params={{slug:c.slug}}>Enroll now <ArrowRight/></Link></Button><p className="mt-4 text-center text-xs leading-5 text-muted-foreground">Secure simulated checkout. Choose M-Pesa or Paystack.</p></aside></section></>}
+export const Route = createFileRoute("/courses/$slug")({
+  loader: ({ params }) => {
+    const course = courses.find((c) => c.slug === params.slug);
+    if (!course) throw notFound();
+    return course;
+  },
+  head: ({ loaderData }) =>
+    meta(
+      loaderData?.title ?? "Course unavailable",
+      loaderData?.short ?? "Course details from Jackie Keya Learning Hub.",
+    ),
+  component: Detail,
+  notFoundComponent: () => (
+    <PageIntro
+      eyebrow="Course unavailable"
+      title="We couldn't find that course."
+      copy="Explore the full course collection to find the right next step."
+    />
+  ),
+});
+function Detail() {
+  const c = Route.useLoaderData();
+  const modules =
+    c.category === "fresh_start"
+      ? [
+          "Understanding what you are carrying",
+          "Releasing with compassion",
+          "Building your next chapter",
+        ]
+      : [
+          "Understanding the blended family system",
+          "Trust, roles, and boundaries",
+          "Communication that creates belonging",
+        ];
+  return (
+    <>
+      <PageIntro eyebrow={c.tone} title={c.title} copy={c.short} />
+      <section className="mx-auto grid max-w-7xl gap-14 px-5 py-16 lg:grid-cols-[1.35fr_.65fr] lg:px-8">
+        <div>
+          <h2 className="font-display text-4xl">What you’ll walk away with</h2>
+          <p className="mt-5 text-lg leading-8 text-muted-foreground">{c.outcome}</p>
+          <h2 className="mt-14 font-display text-4xl">This course is for you if…</h2>
+          <p className="mt-5 leading-8 text-muted-foreground">{c.audience}</p>
+          <h2 className="mt-14 font-display text-4xl">Your learning path</h2>
+          <Accordion type="single" collapsible className="mt-5">
+            {modules.map((m, i) => (
+              <AccordionItem value={`${i}`} key={m}>
+                <AccordionTrigger className="text-base">
+                  <span>
+                    <small className="mr-4 text-primary">0{i + 1}</small>
+                    {m}
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="space-y-3 pl-10 text-muted-foreground">
+                    <p className="flex gap-2">
+                      <PlayCircle className="size-4 shrink-0" />
+                      Guided video lesson
+                    </p>
+                    <p className="flex gap-2">
+                      <Check className="size-4 shrink-0" />
+                      Reflection and practical exercise
+                    </p>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+        <aside className="h-fit border border-border bg-card p-7 lg:sticky lg:top-28">
+          <p className="text-xs font-semibold uppercase tracking-[.18em] text-primary">
+            Start learning today
+          </p>
+          {c.original && (
+            <p className="mt-6 text-sm text-muted-foreground line-through">{fmt(c.original)}</p>
+          )}
+          <p className="font-display text-4xl">{fmt(c.price)}</p>
+          <p className="mt-2 text-xs text-muted-foreground">One-time payment · KES</p>
+          <div className="my-7 space-y-4 border-y border-border py-6 text-sm">
+            <p className="flex gap-3">
+              <BookOpen className="size-4 text-primary" />
+              {c.modules} modules · {c.lessons} lessons
+            </p>
+            <p className="flex gap-3">
+              <Clock3 className="size-4 text-primary" />
+              {c.duration} of guided learning
+            </p>
+            <p className="flex gap-3">
+              <CalendarDays className="size-4 text-primary" />
+              42 days of access
+            </p>
+          </div>
+          <Button asChild className="w-full" size="lg">
+            <Link to="/checkout/$slug" params={{ slug: c.slug }}>
+              Enroll now <ArrowRight />
+            </Link>
+          </Button>
+          <p className="mt-4 text-center text-xs leading-5 text-muted-foreground">
+            Secure simulated checkout. Choose M-Pesa or Paystack.
+          </p>
+        </aside>
+      </section>
+    </>
+  );
+}

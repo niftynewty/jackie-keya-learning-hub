@@ -4,24 +4,47 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 
 /** Profile photo with private-bucket upload and signed preview URL. */
-export function ProfileAvatar({ userId, path, name, onChange }: { userId: string; path: string | null; name: string; onChange: (path: string | null) => void }) {
+export function ProfileAvatar({
+  userId,
+  path,
+  name,
+  onChange,
+}: {
+  userId: string;
+  path: string | null;
+  name: string;
+  onChange: (path: string | null) => void;
+}) {
   const [url, setUrl] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const input = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (!path) { setUrl(null); return; }
-    supabase.storage.from("avatars").createSignedUrl(path, 3600).then(({ data }) => setUrl(data?.signedUrl ?? null));
+    if (!path) {
+      setUrl(null);
+      return;
+    }
+    supabase.storage
+      .from("avatars")
+      .createSignedUrl(path, 3600)
+      .then(({ data }) => setUrl(data?.signedUrl ?? null));
   }, [path]);
 
   async function upload(file: File) {
     setBusy(true);
     const key = `${userId}/avatar-${Date.now()}.${file.name.split(".").pop() ?? "jpg"}`;
     const { error } = await supabase.storage.from("avatars").upload(key, file, { upsert: true });
-    if (error) { setBusy(false); toast.error(error.message); return; }
+    if (error) {
+      setBusy(false);
+      toast.error(error.message);
+      return;
+    }
     const saved = await supabase.from("profiles").update({ avatar_url: key }).eq("id", userId);
     setBusy(false);
-    if (saved.error) { toast.error(saved.error.message); return; }
+    if (saved.error) {
+      toast.error(saved.error.message);
+      return;
+    }
     if (path) await supabase.storage.from("avatars").remove([path]);
     onChange(key);
     toast.success("Profile photo updated");
@@ -33,26 +56,67 @@ export function ProfileAvatar({ userId, path, name, onChange }: { userId: string
     await supabase.storage.from("avatars").remove([path]);
     const { error } = await supabase.from("profiles").update({ avatar_url: null }).eq("id", userId);
     setBusy(false);
-    if (error) { toast.error(error.message); return; }
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     onChange(null);
     toast.success("Photo removed");
   }
 
-  const initials = name.trim().split(/\s+/).slice(0, 2).map((part) => part[0]?.toUpperCase()).join("") || "J";
+  const initials =
+    name
+      .trim()
+      .split(/\s+/)
+      .slice(0, 2)
+      .map((part) => part[0]?.toUpperCase())
+      .join("") || "J";
 
   return (
     <div className="flex items-center gap-5">
       <div className="relative">
         <div className="grid size-24 place-items-center overflow-hidden rounded-full border border-primary/30 bg-secondary/40 font-display text-3xl text-primary">
-          {url ? <img src={url} alt={`${name} profile photo`} className="size-full object-cover" /> : initials}
+          {url ? (
+            <img src={url} alt={`${name} profile photo`} className="size-full object-cover" />
+          ) : (
+            initials
+          )}
         </div>
-        {busy && <span className="absolute inset-0 grid place-items-center rounded-full bg-background/70 text-xs text-primary">Saving</span>}
+        {busy && (
+          <span className="absolute inset-0 grid place-items-center rounded-full bg-background/70 text-xs text-primary">
+            Saving
+          </span>
+        )}
       </div>
       <div className="space-y-2">
-        <input ref={input} type="file" accept="image/*" className="hidden" onChange={(e) => { const file = e.target.files?.[0]; if (file) void upload(file); e.target.value = ""; }} />
-        <Button type="button" variant="outline" size="sm" onClick={() => input.current?.click()} disabled={busy}>{path ? "Change photo" : "Add photo"}</Button>
-        {path && <Button type="button" variant="ghost" size="sm" onClick={remove} disabled={busy}>Remove</Button>}
-        <p className="max-w-xs text-xs text-muted-foreground">A square image under 5MB works best. Only you and Jackie&apos;s team can see it.</p>
+        <input
+          ref={input}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) void upload(file);
+            e.target.value = "";
+          }}
+        />
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => input.current?.click()}
+          disabled={busy}
+        >
+          {path ? "Change photo" : "Add photo"}
+        </Button>
+        {path && (
+          <Button type="button" variant="ghost" size="sm" onClick={remove} disabled={busy}>
+            Remove
+          </Button>
+        )}
+        <p className="max-w-xs text-xs text-muted-foreground">
+          A square image under 5MB works best. Only you and Jackie&apos;s team can see it.
+        </p>
       </div>
     </div>
   );

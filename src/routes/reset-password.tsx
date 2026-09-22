@@ -1,2 +1,57 @@
-import{useState,type FormEvent}from"react";import{createFileRoute,useNavigate}from"@tanstack/react-router";import{PageIntro,meta}from"@/components/site/page";import{Button}from"@/components/ui/button";import{Input}from"@/components/ui/input";import{Label}from"@/components/ui/label";import{supabase}from"@/integrations/supabase/client";import{toast}from"sonner";
-export const Route=createFileRoute("/reset-password")({head:()=>meta("Choose a new password","Securely update your Learning Hub password."),component:Page});function Page(){const[p,setP]=useState(""),[busy,setBusy]=useState(false);const navigate=useNavigate();async function submit(e:FormEvent){e.preventDefault();if(!window.location.hash.includes("type=recovery")){toast.error("Open the recovery link from your email first.");return}setBusy(true);const{error}=await supabase.auth.updateUser({password:p});setBusy(false);if(error){toast.error(error.message);return}toast.success("Password updated.");navigate({to:"/dashboard"})}return <><PageIntro eyebrow="Account recovery" title="Choose a new password." copy="Use at least eight characters and keep it somewhere safe."/><form onSubmit={submit} className="mx-auto my-16 max-w-md border border-border bg-card p-7"><Label>New password</Label><Input className="mt-2" type="password" minLength={8} required value={p} onChange={e=>setP(e.target.value)}/><Button className="mt-6 w-full" disabled={busy}>{busy?"Updating…":"Update password"}</Button></form></>}
+import { useState, type FormEvent } from "react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { PageIntro } from "@/components/site/page";
+import { meta } from "@/components/site/page-meta";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+export const Route = createFileRoute("/reset-password")({
+  head: () => meta("Choose a new password", "Securely update your Learning Hub password."),
+  component: Page,
+});
+function Page() {
+  const [p, setP] = useState(""),
+    [busy, setBusy] = useState(false);
+  const navigate = useNavigate();
+  async function submit(e: FormEvent) {
+    e.preventDefault();
+    if (!window.location.hash.includes("type=recovery")) {
+      toast.error("Open the recovery link from your email first.");
+      return;
+    }
+    setBusy(true);
+    const { error } = await supabase.auth.updateUser({ password: p });
+    setBusy(false);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success("Password updated.");
+    navigate({ to: "/dashboard" });
+  }
+  return (
+    <>
+      <PageIntro
+        eyebrow="Account recovery"
+        title="Choose a new password."
+        copy="Use at least eight characters and keep it somewhere safe."
+      />
+      <form onSubmit={submit} className="mx-auto my-16 max-w-md border border-border bg-card p-7">
+        <Label>New password</Label>
+        <Input
+          className="mt-2"
+          type="password"
+          minLength={8}
+          required
+          value={p}
+          onChange={(e) => setP(e.target.value)}
+        />
+        <Button className="mt-6 w-full" disabled={busy}>
+          {busy ? "Updating…" : "Update password"}
+        </Button>
+      </form>
+    </>
+  );
+}

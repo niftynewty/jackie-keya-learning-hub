@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { CheckCircle2, LockKeyhole, Smartphone, CreditCard, Tag } from "@/components/ui/icons";
-import { PageIntro, meta } from "@/components/site/page";
+import { PageIntro } from "@/components/site/page";
+import { meta } from "@/components/site/page-meta";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { courses, fmt } from "@/lib/site-data";

@@ -16,14 +16,38 @@ export type AdminData = {
   studentBadges: Tables<"student_badges">[];
 };
 
-const empty: AdminData = { courses: [], modules: [], lessons: [], profiles: [], enrollments: [], progress: [], certificates: [], payments: [], bookings: [], badges: [], studentBadges: [] };
+const empty: AdminData = {
+  courses: [],
+  modules: [],
+  lessons: [],
+  profiles: [],
+  enrollments: [],
+  progress: [],
+  certificates: [],
+  payments: [],
+  bookings: [],
+  badges: [],
+  studentBadges: [],
+};
 
 export function useAdminData() {
   const [data, setData] = useState<AdminData>(empty);
   const [loading, setLoading] = useState(true);
 
   const reload = useCallback(async () => {
-    const [courses, modules, lessons, profiles, enrollments, progress, certificates, payments, bookings, badges, studentBadges] = await Promise.all([
+    const [
+      courses,
+      modules,
+      lessons,
+      profiles,
+      enrollments,
+      progress,
+      certificates,
+      payments,
+      bookings,
+      badges,
+      studentBadges,
+    ] = await Promise.all([
       supabase.from("courses").select("*").order("created_at"),
       supabase.from("modules").select("*").order("sort_order"),
       supabase.from("lessons").select("*").order("sort_order"),
@@ -37,14 +61,24 @@ export function useAdminData() {
       supabase.from("student_badges").select("*").order("awarded_at", { ascending: false }),
     ]);
     setData({
-      courses: courses.data ?? [], modules: modules.data ?? [], lessons: lessons.data ?? [], profiles: profiles.data ?? [],
-      enrollments: enrollments.data ?? [], progress: progress.data ?? [], certificates: certificates.data ?? [], payments: payments.data ?? [],
-      bookings: bookings.data ?? [], badges: badges.data ?? [], studentBadges: studentBadges.data ?? [],
+      courses: courses.data ?? [],
+      modules: modules.data ?? [],
+      lessons: lessons.data ?? [],
+      profiles: profiles.data ?? [],
+      enrollments: enrollments.data ?? [],
+      progress: progress.data ?? [],
+      certificates: certificates.data ?? [],
+      payments: payments.data ?? [],
+      bookings: bookings.data ?? [],
+      badges: badges.data ?? [],
+      studentBadges: studentBadges.data ?? [],
     });
     setLoading(false);
   }, []);
 
-  useEffect(() => { reload(); }, [reload]);
+  useEffect(() => {
+    reload();
+  }, [reload]);
 
   const helpers = useMemo(() => {
     const lessonCourse = new Map<string, string>();
@@ -53,13 +87,16 @@ export function useAdminData() {
       if (module) lessonCourse.set(lesson.id, module.course_id);
     }
     const lessonTotals = new Map<string, number>();
-    for (const courseId of lessonCourse.values()) lessonTotals.set(courseId, (lessonTotals.get(courseId) ?? 0) + 1);
+    for (const courseId of lessonCourse.values())
+      lessonTotals.set(courseId, (lessonTotals.get(courseId) ?? 0) + 1);
     const courseTitles: Record<string, string> = {};
     for (const course of data.courses) courseTitles[course.id] = course.title;
     const names: Record<string, string> = {};
     for (const profile of data.profiles) names[profile.id] = profile.display_name || "Student";
     const completedCount = (userId: string, courseId: string) =>
-      data.progress.filter((p) => p.user_id === userId && p.is_completed && lessonCourse.get(p.lesson_id) === courseId).length;
+      data.progress.filter(
+        (p) => p.user_id === userId && p.is_completed && lessonCourse.get(p.lesson_id) === courseId,
+      ).length;
     const totalLessons = (courseId: string) => lessonTotals.get(courseId) ?? 0;
     const percent = (userId: string, courseId: string) => {
       const total = totalLessons(courseId);
