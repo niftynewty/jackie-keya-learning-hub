@@ -1,4 +1,4 @@
-# Harmony Hub
+# jackie keya learning hub
 
 here is a prompt for the website i want to build
 furthermore i will upload 10 moodboards,,,,,analyze then in details and reply with ok so i can upload the last mood board
