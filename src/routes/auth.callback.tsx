@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
-import { meta } from "@/components/site/page";
+import { meta } from "@/components/site/page-meta";
 
 export const Route = createFileRoute("/auth/callback")({
   ssr: false,
